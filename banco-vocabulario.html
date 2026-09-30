@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Banco de Vocabulario Académico — Español A SL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #E7E1D0;
+    --card: #FAF7EC;
+    --card-border: #D8CFB4;
+    --ink: #241F1B;
+    --ink-soft: #5A5044;
+    --wine: #7A2430;
+    --wine-soft: #F1DCDD;
+    --gold: #96702C;
+    --gold-soft: #EFE2C6;
+    --sage: #55643F;
+    --sage-soft: #DEE6D1;
+    --slate: #34495E;
+    --slate-soft: #D9E1E8;
+    --teal: #3C6E62;
+    --teal-soft: #DCE9E5;
+    --success: #3E6B3E;
+    --shadow: rgba(36, 31, 27, 0.14);
+    --focus: #7A2430;
+    color-scheme: light;
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --paper: #1B1815;
+      --card: #262019;
+      --card-border: #3B342A;
+      --ink: #EDE6D8;
+      --ink-soft: #B8AD9A;
+      --wine: #D98F97;
+      --wine-soft: #3A2226;
+      --gold: #D9B26A;
+      --gold-soft: #362B18;
+      --sage: #9AB080;
+      --sage-soft: #263021;
+      --slate: #8FADC7;
+      --slate-soft: #202B34;
+      --teal: #7FB3A3;
+      --teal-soft: #1D2E29;
+      --success: #8FBF8F;
+      --shadow: rgba(0, 0, 0, 0.4);
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1B1815;
+    --card: #262019;
+    --card-border: #3B342A;
+    --ink: #EDE6D8;
+    --ink-soft: #B8AD9A;
+    --wine: #D98F97;
+    --wine-soft: #3A2226;
+    --gold: #D9B26A;
+    --gold-soft: #362B18;
+    --sage: #9AB080;
+    --sage-soft: #263021;
+    --slate: #8FADC7;
+    --slate-soft: #202B34;
+    --teal: #7FB3A3;
+    --teal-soft: #1D2E29;
+    --success: #8FBF8F;
+    --shadow: rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Work Sans", -apple-system, sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100%;
+  }
+
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  header.masthead {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+  }
+
+  .masthead-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.7rem;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    max-width: 60ch;
+    line-height: 1.5;
+  }
+
+  .badge-count {
+    font-family: "Spectral", serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--wine);
+    white-space: nowrap;
+  }
+
+  nav.tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  nav.tabs button {
+    font-family: "Work Sans", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    background: none;
+    border: none;
+    padding: 10px 4px;
+    margin-right: 22px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transform: translateY(1px);
+  }
+
+  nav.tabs button.active {
+    color: var(--ink);
+    border-bottom-color: var(--wine);
+  }
+
+  nav.tabs button:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  /* ---- Consulta ---- */
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+
+  .search-input {
+    flex: 1 1 220px;
+    font-family: "Work Sans", sans-serif;
+    font-size: 0.95rem;
+    padding: 10px 12px;
+    border: 1px solid var(--card-border);
+    border-radius: 3px;
+    background: var(--card);
+    color: var(--ink);
+  }
+
+  .chip-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    font-family: "Work Sans", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--card-border);
+    background: var(--card);
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+
+  .chip[data-cat="ling"].active { background: var(--gold-soft); color: var(--gold); border-color: var(--gold); }
+  .chip[data-cat="lit"].active { background: var(--slate-soft); color: var(--slate); border-color: var(--slate); }
+  .chip[data-cat="adj"].active { background: var(--teal-soft); color: var(--teal); border-color: var(--teal); }
+  .chip[data-cat="conectores"].active { background: var(--wine-soft); color: var(--wine); border-color: var(--wine); }
+  .chip[data-cat="verbos"].active { background: var(--sage-soft); color: var(--sage); border-color: var(--sage); }
+  .chip[data-cat="todas"].active { background: var(--ink); color: var(--card); border-color: var(--ink); }
+
+  .result-count {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .block-heading {
+    grid-column: 1 / -1;
+    font-family: "Spectral", serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 6px;
+    margin: 6px 0 -2px;
+  }
+
+  .block-heading:first-child {
+    margin-top: 0;
+  }
+
+  .word-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 3px;
+    padding: 16px 16px 14px;
+    position: relative;
+    box-shadow: 0 1px 2px var(--shadow);
+  }
+
+  .word-card .tab-mark {
+    position: absolute;
+    top: 0;
+    left: 16px;
+    width: 30px;
+    height: 5px;
+    border-radius: 0 0 3px 3px;
+  }
+  .word-card[data-cat="ling"] .tab-mark { background: var(--gold); }
+  .word-card[data-cat="lit"] .tab-mark { background: var(--slate); }
+  .word-card[data-cat="adj"] .tab-mark { background: var(--teal); }
+  .word-card[data-cat="conectores"] .tab-mark { background: var(--wine); }
+  .word-card[data-cat="verbos"] .tab-mark { background: var(--sage); }
+
+  .word-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .word-card h3 {
+    font-family: "Spectral", serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .word-tipo {
+    font-family: "Spectral", serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .word-def {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    margin: 8px 0 8px;
+  }
+
+  .word-ej {
+    font-size: 0.87rem;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    font-style: italic;
+    border-left: 2px solid var(--card-border);
+    padding-left: 10px;
+  }
+
+  .word-meta {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .word-cat-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+
+  .mark-btn {
+    font-family: "Work Sans", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: none;
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    padding: 4px 10px;
+    cursor: pointer;
+    color: var(--ink-soft);
+  }
+
+  .mark-btn.dominada {
+    background: var(--sage-soft);
+    color: var(--success);
+    border-color: var(--success);
+  }
+
+  .empty-state {
+    padding: 40px 10px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-family: "Spectral", serif;
+    font-style: italic;
+  }
+
+  /* ---- Práctica semanal ---- */
+
+  .week-picker {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .week-btn {
+    font-family: "Work Sans", sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 3px;
+    border: 1px solid var(--card-border);
+    background: var(--card);
+    color: var(--ink-soft);
+    cursor: pointer;
+    position: relative;
+  }
+
+  .week-btn.active {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .week-btn .week-progress {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 400;
+    margin-top: 2px;
+    color: var(--ink-soft);
+  }
+
+  .mode-switch {
+    display: flex;
+    gap: 0;
+    margin-bottom: 22px;
+    border: 1px solid var(--card-border);
+    border-radius: 3px;
+    width: fit-content;
+  }
+
+  .mode-switch button {
+    font-family: "Work Sans", sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 9px 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-soft);
+  }
+
+  .mode-switch button.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* flashcards */
+  .flash-wrap {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .flash-progress {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-bottom: 14px;
+  }
+
+  .flashcard {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    min-height: 260px;
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px var(--shadow);
+    transition: transform 0.15s ease;
+  }
+
+  .flashcard:active { transform: scale(0.99); }
+
+  .flashcard .cat-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 14px;
+  }
+
+  .flashcard .front-word {
+    font-family: "Spectral", serif;
+    font-weight: 600;
+    font-size: 1.9rem;
+  }
+
+  .flashcard .front-tipo {
+    font-family: "Spectral", serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+
+  .flashcard .flip-hint {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin-top: 18px;
+  }
+
+  .flashcard .back-def {
+    font-size: 1.02rem;
+    line-height: 1.55;
+  }
+
+  .flashcard .back-ej {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  .flash-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+    gap: 10px;
+  }
+
+  .flash-controls .nav-btn {
+    font-family: "Work Sans", sans-serif;
+    font-size: 1.1rem;
+    background: none;
+    border: 1px solid var(--card-border);
+    border-radius: 3px;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    color: var(--ink);
+  }
+
+  .flash-controls .judge-btns {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .judge-btns button {
+    font-family: "Work Sans", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid var(--card-border);
+    background: var(--card);
+    color: var(--ink-soft);
+  }
+
+  .judge-btns .btn-se { border-color: var(--success); color: var(--success); }
+  .judge-btns .btn-repasar { border-color: var(--wine); color: var(--wine); }
+
+  /* quiz */
+  .quiz-wrap {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .quiz-progress {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .quiz-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 26px;
+    box-shadow: 0 2px 6px var(--shadow);
+  }
+
+  .quiz-prompt {
+    font-size: 1.0rem;
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+
+  .quiz-prompt .cat-tag {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .quiz-options {
+    display: grid;
+    gap: 9px;
+  }
+
+  .quiz-option {
+    font-family: "Spectral", serif;
+    font-size: 1.05rem;
+    text-align: left;
+    padding: 11px 14px;
+    border-radius: 4px;
+    border: 1px solid var(--card-border);
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .quiz-option.correct { border-color: var(--success); background: var(--sage-soft); color: var(--success); }
+  .quiz-option.incorrect { border-color: var(--wine); background: var(--wine-soft); color: var(--wine); }
+  .quiz-option[disabled] { cursor: default; }
+
+  .quiz-next {
+    margin-top: 18px;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 10px 18px;
+    border-radius: 3px;
+    border: none;
+    background: var(--ink);
+    color: var(--paper);
+    cursor: pointer;
+    display: none;
+  }
+
+  .quiz-result {
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .quiz-result .score {
+    font-family: "Spectral", serif;
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--wine);
+  }
+
+  .quiz-result .score-label {
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+
+  .quiz-result button {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 10px 20px;
+    border-radius: 3px;
+    border: 1px solid var(--ink);
+    background: none;
+    color: var(--ink);
+    cursor: pointer;
+    margin: 6px;
+  }
+
+  footer.note {
+    margin-top: 40px;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--card-border);
+    padding-top: 14px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 1.4rem; }
+    .flashcard .front-word { font-size: 1.5rem; }
+    .wrap { padding: 20px 14px 50px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="masthead-top">
+      <h1>Banco de Vocabulario Académico</h1>
+      <span class="badge-count" id="progressBadge">0 / 112 dominadas</span>
+    </div>
+    <p class="subtitle">Español A — vocabulario de análisis lingüístico, visual y literario, conectores del discurso y adjetivos para evaluar un texto, válido para cualquier prueba. Organizado en 4 semanas de trabajo.</p>
+  </header>
+
+  <nav class="tabs">
+    <button class="active" data-tab="consulta">Consulta</button>
+    <button data-tab="practica">Práctica semanal</button>
+  </nav>
+
+  <section id="tab-consulta">
+    <div class="controls">
+      <input type="text" class="search-input" id="searchInput" placeholder="Buscar palabra o definición…">
+    </div>
+    <div class="chip-row" id="catChips">
+      <button class="chip active" data-cat="todas">Todas</button>
+      <button class="chip" data-cat="ling">Análisis lingüístico y visual</button>
+      <button class="chip" data-cat="lit">Análisis literario</button>
+      <button class="chip" data-cat="adj">Adjetivos evaluativos</button>
+      <button class="chip" data-cat="conectores">Conectores del discurso</button>
+      <button class="chip" data-cat="verbos">Verbos</button>
+    </div>
+    <p class="result-count" id="resultCount"></p>
+    <div class="card-grid" id="cardGrid"></div>
+  </section>
+
+  <section id="tab-practica" style="display:none;">
+    <div class="week-picker" id="weekPicker"></div>
+    <div class="mode-switch">
+      <button class="active" data-mode="fichas">Fichas</button>
+      <button data-mode="quiz">Autoevaluación</button>
+      <button data-mode="repaso">Repaso acumulado</button>
+    </div>
+    <div id="practicaBody"></div>
+  </section>
+
+</div>
+
+<script>
+const VOCAB = [
+  {id:1, palabra:"registro", tipo:"s.m.", cat:"ling", bloque:"Comunicación y funciones del lenguaje", semana:1, def:"Nivel de formalidad y variedad de lengua que un hablante adapta a la situación comunicativa.", ej:"El registro coloquial del narrador contrasta con la solemnidad del tema tratado."},
+  {id:2, palabra:"tipología textual", tipo:"loc.", cat:"ling", bloque:"Tipología y finalidad textual", semana:1, def:"Clasificación de los textos según su función y estructura predominante (narrativa, descriptiva, argumentativa, expositiva, instructiva).", ej:"Este artículo combina rasgos de la tipología argumentativa y expositiva."},
+  {id:3, palabra:"cohesión", tipo:"s.f.", cat:"ling", bloque:"Estructura y cohesión", semana:1, def:"Conjunto de mecanismos lingüísticos (conectores, pronombres, sinónimos) que enlazan las partes de un texto.", ej:"La cohesión del fragmento se sostiene mediante la repetición anafórica del sujeto."},
+  {id:4, palabra:"coherencia", tipo:"s.f.", cat:"ling", bloque:"Estructura y cohesión", semana:1, def:"Propiedad textual que garantiza la unidad de sentido y la organización lógica de las ideas.", ej:"Pese a los saltos temporales, el relato mantiene una coherencia interna notable."},
+  {id:5, palabra:"deixis", tipo:"s.f.", cat:"ling", bloque:"Nivel morfosintáctico", semana:1, def:"Fenómeno lingüístico por el cual ciertos elementos (pronombres, adverbios) remiten a elementos del contexto comunicativo.", ej:"Los deícticos temporales sitúan al lector en el momento exacto de la enunciación."},
+  {id:8, palabra:"marcador textual", tipo:"loc.", cat:"ling", bloque:"Estructura y cohesión", semana:2, def:"Palabra o expresión que organiza el discurso y señala relaciones lógicas entre las partes del texto.", ej:"Los marcadores textuales 'en primer lugar' y 'finalmente' estructuran la argumentación."},
+  {id:9, palabra:"polifonía", tipo:"s.f.", cat:"ling", bloque:"Comunicación y funciones del lenguaje", semana:2, def:"Presencia de varias voces o puntos de vista dentro de un mismo texto, literario o no literario (citas, testimonios, estilo directo e indirecto, ironía).", ej:"El reportaje construye un texto polifónico al combinar las declaraciones de vecinos, expertos y autoridades, que ofrecen versiones distintas del mismo suceso."},
+  {id:10, palabra:"intertextualidad", tipo:"s.f.", cat:"ling", bloque:"Comunicación y funciones del lenguaje", semana:2, def:"Relación explícita o implícita de un texto con otros textos anteriores.", ej:"La intertextualidad bíblica enriquece la lectura simbólica del poema."},
+  {id:11, palabra:"connotación", tipo:"s.f.", cat:"ling", bloque:"Nivel léxico-semántico", semana:2, def:"Significado subjetivo o afectivo que una palabra adquiere más allá de su definición literal.", ej:"El término 'hogar' añade una connotación de calidez ausente en 'vivienda'."},
+  {id:12, palabra:"denotación", tipo:"s.f.", cat:"ling", bloque:"Nivel léxico-semántico", semana:2, def:"Significado objetivo y literal de una palabra, independiente del contexto.", ej:"En su denotación, 'casa' designa simplemente una construcción habitable."},
+  {id:13, palabra:"isotopía", tipo:"s.f.", cat:"ling", bloque:"Nivel léxico-semántico", semana:2, def:"Repetición de un mismo campo de significado a lo largo de un texto, que refuerza su unidad temática.", ej:"La isotopía de la oscuridad recorre todo el relato y anticipa el desenlace trágico."},
+  {id:14, palabra:"campo semántico", tipo:"loc.", cat:"ling", bloque:"Nivel léxico-semántico", semana:2, def:"Conjunto de palabras relacionadas por compartir un mismo ámbito de significado.", ej:"El campo semántico bélico domina la descripción de la discusión familiar."},
+  {id:18, palabra:"receptor", tipo:"s.m.", cat:"ling", bloque:"Comunicación y funciones del lenguaje", semana:3, def:"Instancia a la que se dirige un enunciado o texto dentro del acto comunicativo.", ej:"El receptor implícito de la carta es la sociedad burguesa de la época."},
+  {id:19, palabra:"paratexto", tipo:"s.m.", cat:"ling", bloque:"Estructura y cohesión", semana:3, def:"Elementos que acompañan al texto principal (título, prólogo, notas) y orientan su interpretación.", ej:"El paratexto editorial condiciona las expectativas del lector antes de comenzar la lectura."},
+  {id:22, palabra:"ambigüedad", tipo:"s.f.", cat:"ling", bloque:"Nivel léxico-semántico", semana:4, def:"Cualidad de un enunciado que admite más de una interpretación.", ej:"La ambigüedad sintáctica del titular genera dos lecturas posibles."},
+  {id:23, palabra:"elipsis (lingüística)", tipo:"s.f.", cat:"ling", bloque:"Estructura y cohesión", semana:4, def:"Omisión de un elemento recuperable por el contexto, sin que se pierda el sentido.", ej:"La elipsis del verbo agiliza el ritmo de la enumeración final."},
+  {id:26, palabra:"yuxtaposición", tipo:"s.f.", cat:"ling", bloque:"Nivel morfosintáctico", semana:4, def:"Unión de oraciones o elementos sin nexo explícito que los conecte.", ej:"La yuxtaposición de frases breves imprime un ritmo entrecortado a la escena."},
+  {id:27, palabra:"estilo indirecto libre", tipo:"loc.", cat:"ling", bloque:"Nivel morfosintáctico", semana:4, def:"Técnica narrativa que reproduce el pensamiento de un personaje sin marcas formales de cita ni verbo introductorio.", ej:"El estilo indirecto libre difumina la frontera entre la voz narradora y la del personaje."},
+  {id:28, palabra:"verosimilitud", tipo:"s.f.", cat:"lit", bloque:"Narratología", semana:4, def:"Cualidad de lo que resulta creíble dentro de la lógica interna de un texto, aunque no sea real.", ej:"Pese a lo fantástico del argumento, el autor logra una notable verosimilitud."},
+  {id:29, palabra:"no obstante", tipo:"loc. adv.", cat:"conectores", bloque:"Oposición y concesión", semana:1, def:"Conector de oposición equivalente a 'sin embargo', propio de un registro formal.", ej:"El argumento parece sólido; no obstante, ignora las excepciones históricas."},
+  {id:30, palabra:"si bien", tipo:"loc. conj.", cat:"conectores", bloque:"Oposición y concesión", semana:1, def:"Introduce una concesión antes de matizarla con una idea contraria.", ej:"Si bien el autor defiende la tesis con firmeza, algunos datos la contradicen."},
+  {id:31, palabra:"de ahí que", tipo:"loc. conj.", cat:"conectores", bloque:"Consecuencia", semana:1, def:"Introduce una consecuencia lógica derivada de lo dicho anteriormente (rige subjuntivo).", ej:"El texto carece de fuentes verificables; de ahí que resulte difícil sostener su credibilidad."},
+  {id:32, palabra:"en efecto", tipo:"loc. adv.", cat:"conectores", bloque:"Destacar y reforzar", semana:1, def:"Confirma o refuerza una afirmación previa.", ej:"En efecto, los datos citados corroboran la hipótesis inicial."},
+  {id:33, palabra:"cabe destacar", tipo:"loc. v.", cat:"conectores", bloque:"Destacar y reforzar", semana:1, def:"Fórmula para introducir un dato o idea que merece atención especial.", ej:"Cabe destacar que el fenómeno se repite en las tres novelas analizadas."},
+  {id:34, palabra:"cabe señalar", tipo:"loc. v.", cat:"conectores", bloque:"Destacar y reforzar", semana:1, def:"Similar a 'cabe destacar'; introduce una precisión relevante para el argumento.", ej:"Cabe señalar que la crítica no fue unánime en su valoración de la obra."},
+  {id:37, palabra:"en este sentido", tipo:"loc. adv.", cat:"conectores", bloque:"Reformular y aclarar", semana:2, def:"Conector que retoma una idea para desarrollarla o precisarla.", ej:"En este sentido, la estructura circular refuerza el sentimiento de fatalidad."},
+  {id:39, palabra:"con todo", tipo:"loc. adv.", cat:"conectores", bloque:"Oposición y concesión", semana:2, def:"Introduce una objeción o matización pese a lo dicho antes.", ej:"Con todo, el desenlace deja abiertas varias interpretaciones posibles."},
+  {id:40, palabra:"ahora bien", tipo:"loc. adv.", cat:"conectores", bloque:"Oposición y concesión", semana:2, def:"Marca un giro argumentativo hacia una consideración adicional o contraria.", ej:"Ahora bien, esta lectura simbólica no excluye una dimensión política del texto."},
+  {id:41, palabra:"asimismo", tipo:"adv.", cat:"conectores", bloque:"Añadir ideas", semana:2, def:"Añade información en la misma línea argumentativa que la anterior.", ej:"El poema explora la soledad; asimismo, aborda el paso inexorable del tiempo."},
+  {id:42, palabra:"en consecuencia", tipo:"loc. adv.", cat:"conectores", bloque:"Consecuencia", semana:2, def:"Introduce el efecto directo de lo expuesto previamente.", ej:"El personaje rompe con su pasado; en consecuencia, su identidad se fragmenta."},
+  {id:43, palabra:"evidenciar", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:3, def:"Mostrar con claridad, hacer patente.", ej:"El uso reiterado del imperativo evidencia la autoridad del hablante lírico."},
+  {id:44, palabra:"poner de manifiesto", tipo:"loc. v.", cat:"verbos", bloque:"Mostrar y revelar", semana:3, def:"Revelar o dejar clara una idea implícita.", ej:"El contraste cromático pone de manifiesto la tensión entre los dos espacios narrativos."},
+  {id:45, palabra:"denotar", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:3, def:"Indicar o dar a entender un rasgo o cualidad.", ej:"El léxico técnico denota el distanciamiento emocional del narrador."},
+  {id:46, palabra:"connotar", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:3, def:"Sugerir un significado añadido más allá del literal.", ej:"El adjetivo 'árido' connota tanto el paisaje como la relación entre los personajes."},
+  {id:47, palabra:"subrayar", tipo:"v. tr.", cat:"verbos", bloque:"Intensificar o atenuar", semana:3, def:"Destacar o poner énfasis en una idea.", ej:"La repetición del verso subraya la obsesión del yo poético."},
+  {id:48, palabra:"matizar", tipo:"v. tr.", cat:"verbos", bloque:"Intensificar o atenuar", semana:3, def:"Introducir una precisión que modifica ligeramente una afirmación previa.", ej:"Conviene matizar esta lectura considerando el contexto de censura en que se escribió."},
+  {id:49, palabra:"refutar", tipo:"v. tr.", cat:"verbos", bloque:"Argumentar y valorar", semana:3, def:"Rebatir un argumento con razones contrarias.", ej:"El crítico refuta la interpretación biográfica apoyándose en el propio texto."},
+  {id:50, palabra:"corroborar", tipo:"v. tr.", cat:"verbos", bloque:"Argumentar y valorar", semana:4, def:"Confirmar una afirmación aportando pruebas adicionales.", ej:"Las citas seleccionadas corroboran la tesis planteada en la introducción."},
+  {id:51, palabra:"cuestionar", tipo:"v. tr.", cat:"verbos", bloque:"Argumentar y valorar", semana:4, def:"Poner en duda una idea o afirmación.", ej:"El final abierto cuestiona la noción tradicional de justicia poética."},
+  {id:52, palabra:"problematizar", tipo:"v. tr.", cat:"verbos", bloque:"Argumentar y valorar", semana:4, def:"Presentar un asunto como complejo o conflictivo en lugar de resolverlo de forma simple.", ej:"El autor problematiza la idea de identidad nacional a través del exilio del protagonista."},
+  {id:53, palabra:"argüir", tipo:"v. tr.", cat:"verbos", bloque:"Argumentar y valorar", semana:4, def:"Presentar argumentos para sostener una tesis.", ej:"El ensayista arguye que la forma poética condiciona el contenido emocional del texto."},
+  {id:54, palabra:"sugerir", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:4, def:"Insinuar una idea sin afirmarla de manera categórica.", ej:"El final ambiguo sugiere, más que afirma, la culpabilidad del personaje."},
+  {id:55, palabra:"apuntar a", tipo:"loc. v.", cat:"verbos", bloque:"Relacionar y estructurar", semana:4, def:"Señalar una dirección o hipótesis interpretativa.", ej:"Varios indicios apuntan a una lectura alegórica de la novela."},
+  {id:56, palabra:"revelar", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:4, def:"Dar a conocer algo oculto o implícito.", ej:"El monólogo final revela las verdaderas motivaciones del antagonista."},
+  {id:59, palabra:"cabría afirmar", tipo:"loc. v.", cat:"conectores", bloque:"Opinión e hipótesis", semana:1, def:"Fórmula prudente para introducir una afirmación interpretativa, propia del registro académico oral.", ej:"Cabría afirmar que el silencio del personaje es tan significativo como sus palabras."},
+  {id:61, palabra:"en cuanto a", tipo:"loc. prep.", cat:"conectores", bloque:"Introducir el tema", semana:1, def:"Introduce el tema o aspecto que se va a tratar a continuación.", ej:"En cuanto a la estructura, la obra se organiza en tres movimientos simétricos."},
+  {id:62, palabra:"en lo que respecta a", tipo:"loc. prep.", cat:"conectores", bloque:"Introducir el tema", semana:1, def:"Sinónimo formal de 'en cuanto a'; delimita el ámbito de la afirmación.", ej:"En lo que respecta al lenguaje, destaca el uso de un léxico marcadamente sensorial."},
+  {id:63, palabra:"por un lado / por otro lado", tipo:"loc. adv.", cat:"conectores", bloque:"Ordenar el discurso", semana:1, def:"Estructura que organiza una comparación o contraste de ideas.", ej:"Por un lado, el protagonista anhela la libertad; por otro, teme perder su identidad colectiva."},
+  {id:64, palabra:"en definitiva", tipo:"loc. adv.", cat:"conectores", bloque:"Retomar y concluir", semana:2, def:"Introduce una síntesis o conclusión general tras el desarrollo de varios argumentos.", ej:"En definitiva, la obra propone una reflexión sobre la memoria colectiva."},
+  {id:65, palabra:"para concluir", tipo:"loc. v.", cat:"conectores", bloque:"Retomar y concluir", semana:2, def:"Marca formalmente el cierre de una intervención oral.", ej:"Para concluir, me gustaría retomar la idea del tiempo circular con la que comencé."},
+  {id:66, palabra:"si se retoma la idea inicial", tipo:"loc. v.", cat:"conectores", bloque:"Retomar y concluir", semana:2, def:"Fórmula para volver a un argumento anterior y desarrollarlo o cerrarlo.", ej:"Si se retoma la idea inicial, el exilio no es solo geográfico sino también emocional."},
+  {id:67, palabra:"como se ha mencionado", tipo:"loc. v.", cat:"conectores", bloque:"Retomar y concluir", semana:2, def:"Recupera una idea ya expuesta en el propio discurso.", ej:"Como se ha mencionado, el narrador oculta información deliberadamente."},
+  {id:68, palabra:"profundizar en", tipo:"loc. v.", cat:"verbos", bloque:"Relacionar y estructurar", semana:2, def:"Analizar un aspecto con mayor detenimiento.", ej:"Me gustaría profundizar en el papel simbólico del espejo en este fragmento."},
+  {id:69, palabra:"ahondar en", tipo:"loc. v.", cat:"verbos", bloque:"Relacionar y estructurar", semana:2, def:"Sinónimo de 'profundizar en', propio de un registro cuidado.", ej:"Conviene ahondar en las implicaciones políticas de esta metáfora."},
+  {id:70, palabra:"plantear", tipo:"v. tr.", cat:"verbos", bloque:"Relacionar y estructurar", semana:2, def:"Exponer una cuestión, problema o hipótesis interpretativa.", ej:"El texto plantea una tensión irresoluble entre deseo y deber."},
+  {id:71, palabra:"esbozar", tipo:"v. tr.", cat:"verbos", bloque:"Relacionar y estructurar", semana:3, def:"Presentar una idea de forma inicial o general, sin desarrollarla del todo.", ej:"El autor apenas esboza el conflicto, dejando que el lector complete los vacíos."},
+  {id:72, palabra:"vislumbrar", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:3, def:"Percibir algo de manera parcial o incipiente.", ej:"En estos primeros versos ya se vislumbra el tono elegíaco del poemario."},
+  {id:73, palabra:"entrever", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:3, def:"Percibir algo de forma indirecta o incompleta.", ej:"Se entrevé, tras el humor superficial, una honda crítica social."},
+  {id:74, palabra:"poner en tela de juicio", tipo:"loc. v.", cat:"verbos", bloque:"Argumentar y valorar", semana:3, def:"Cuestionar la validez o veracidad de algo.", ej:"El testimonio pone en tela de juicio la versión oficial de los hechos."},
+  {id:75, palabra:"reflejar", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:3, def:"Mostrar o representar de forma clara un aspecto de la realidad.", ej:"El caos sintáctico del monólogo refleja el desorden mental del personaje."},
+  {id:76, palabra:"encarnar", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:3, def:"Representar de forma simbólica una idea o valor a través de un personaje o elemento.", ej:"La abuela encarna la memoria oral de una comunidad desaparecida."},
+  {id:77, palabra:"simbolizar", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:3, def:"Representar una idea abstracta mediante un elemento concreto.", ej:"El río simboliza el paso inexorable del tiempo a lo largo de la novela."},
+  {id:78, palabra:"aludir a", tipo:"loc. v.", cat:"verbos", bloque:"Mostrar y revelar", semana:4, def:"Referirse a algo de manera indirecta, sin nombrarlo explícitamente.", ej:"El título alude veladamente al mito clásico que estructura la trama."},
+  {id:79, palabra:"hacer hincapié en", tipo:"loc. v.", cat:"verbos", bloque:"Intensificar o atenuar", semana:4, def:"Insistir o poner énfasis especial en un punto.", ej:"El profesor hizo hincapié en la importancia del contexto histórico para la interpretación."},
+  {id:80, palabra:"remitir a", tipo:"loc. v.", cat:"verbos", bloque:"Mostrar y revelar", semana:4, def:"Reenviar o conectar con otro elemento, texto o idea.", ej:"La imagen del laberinto remite directamente a la tradición borgiana."},
+  {id:81, palabra:"abordar", tipo:"v. tr.", cat:"verbos", bloque:"Relacionar y estructurar", semana:4, def:"Tratar o enfrentar un tema desde una perspectiva determinada.", ej:"La autora aborda el duelo desde una perspectiva íntima y no sentimental."},
+  {id:82, palabra:"constatar", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:4, def:"Comprobar o verificar un hecho mediante evidencia textual.", ej:"Podemos constatar esta evolución comparando el primer y el último capítulo."},
+  {id:83, palabra:"discrepar de", tipo:"loc. v.", cat:"verbos", bloque:"Argumentar y valorar", semana:4, def:"Estar en desacuerdo con una interpretación o postura.", ej:"Discrepo de la lectura puramente biográfica que propone parte de la crítica."},
+  {id:84, palabra:"converger en", tipo:"loc. v.", cat:"verbos", bloque:"Relacionar y estructurar", semana:4, def:"Confluir varios elementos o ideas hacia un mismo punto.", ej:"Los distintos hilos narrativos convergen en el capítulo final."},
+  {id:85, palabra:"anáfora (retórica)", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:1, def:"Repetición de una o más palabras al inicio de versos o frases sucesivas.", ej:"La anáfora de 'nunca' en la segunda estrofa intensifica el tono de negación."},
+  {id:86, palabra:"metáfora", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:1, def:"Traslado de significado basado en una relación de semejanza entre dos términos.", ej:"La metáfora del barco a la deriva expresa la falta de rumbo vital del protagonista."},
+  {id:87, palabra:"metonimia", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:1, def:"Figura que designa una realidad mediante otra con la que mantiene una relación de contigüidad (causa-efecto, parte-todo).", ej:"'La corona' funciona como metonimia del poder monárquico."},
+  {id:88, palabra:"sinécdoque", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:1, def:"Variante de la metonimia que nombra el todo por la parte o viceversa.", ej:"'Cien cabezas de ganado' es una sinécdoque donde la parte designa al animal entero."},
+  {id:89, palabra:"hipérbaton", tipo:"s.m.", cat:"lit", bloque:"Figuras retóricas", semana:1, def:"Alteración del orden sintáctico habitual con fines expresivos o rítmicos.", ej:"El hipérbaton inicial retrasa la aparición del sujeto y genera expectación."},
+  {id:90, palabra:"polisíndeton", tipo:"s.m.", cat:"lit", bloque:"Figuras retóricas", semana:1, def:"Repetición innecesaria de conjunciones para intensificar el ritmo o la acumulación.", ej:"El polisíndeton de 'y... y... y...' transmite la sensación de agotamiento del personaje."},
+  {id:91, palabra:"asíndeton", tipo:"s.m.", cat:"lit", bloque:"Figuras retóricas", semana:1, def:"Supresión de conjunciones entre elementos coordinados, lo que agiliza el ritmo.", ej:"El asíndeton final imprime velocidad a la escena de huida."},
+  {id:92, palabra:"aliteración", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:2, def:"Repetición de sonidos, generalmente consonánticos, con efecto rítmico o expresivo.", ej:"La aliteración de la 's' sugiere el susurro del viento entre los árboles."},
+  {id:93, palabra:"anadiplosis", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:2, def:"Repetición al inicio de un verso o frase de la palabra que cerraba el anterior.", ej:"La anadiplosis encadena las estrofas y refuerza la idea de continuidad."},
+  {id:94, palabra:"paralelismo", tipo:"s.m.", cat:"lit", bloque:"Figuras retóricas", semana:2, def:"Repetición de una misma estructura sintáctica en versos o frases sucesivas.", ej:"El paralelismo sintáctico entre ambas estrofas subraya el contraste temático."},
+  {id:95, palabra:"antítesis", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:2, def:"Contraposición de ideas o términos de significado opuesto.", ej:"La antítesis entre luz y sombra vertebra toda la imaginería del poema."},
+  {id:96, palabra:"oxímoron", tipo:"s.m.", cat:"lit", bloque:"Figuras retóricas", semana:2, def:"Combinación de dos términos de significado contradictorio en una misma expresión.", ej:"'Silencio ensordecedor' es un oxímoron que intensifica la tensión de la escena."},
+  {id:97, palabra:"hipérbole", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:2, def:"Exageración retórica con fines expresivos.", ej:"La hipérbole del llanto, 'un río de lágrimas', enfatiza el dolor del personaje."},
+  {id:98, palabra:"prosopopeya", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:2, def:"Atribución de cualidades humanas a seres inanimados o abstractos (personificación).", ej:"La prosopopeya del mar, que 'gime' y 'se lamenta', anticipa la tragedia."},
+  {id:99, palabra:"ironía", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:3, def:"Recurso que expresa lo contrario de lo que literalmente se dice, con intención crítica o humorística.", ej:"La ironía del narrador desmonta el heroísmo aparente del protagonista."},
+  {id:100, palabra:"sarcasmo", tipo:"s.m.", cat:"lit", bloque:"Figuras retóricas", semana:3, def:"Ironía mordaz o hiriente, con intención de burla explícita.", ej:"El sarcasmo del personaje secundario delata su desprecio por la clase dirigente."},
+  {id:101, palabra:"gradación", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:3, def:"Disposición de palabras o ideas en una serie ascendente o descendente de intensidad (clímax/anticlímax).", ej:"La gradación de adjetivos culmina en un clímax de horror contenido."},
+  {id:102, palabra:"epíteto", tipo:"s.m.", cat:"lit", bloque:"Figuras retóricas", semana:3, def:"Adjetivo que expresa una cualidad inherente al sustantivo, sin función distintiva.", ej:"El epíteto 'blanca nieve' refuerza connotativamente la pureza del paisaje."},
+  {id:103, palabra:"símil", tipo:"s.m.", cat:"lit", bloque:"Figuras retóricas", semana:3, def:"Comparación explícita entre dos términos mediante un nexo comparativo ('como', 'cual').", ej:"El símil 'como una sombra' anticipa la disolución de la identidad del personaje."},
+  {id:104, palabra:"apóstrofe", tipo:"s.m.", cat:"lit", bloque:"Figuras retóricas", semana:3, def:"Figura mediante la cual el hablante se dirige directamente a un ser, presente o ausente, real o imaginario.", ej:"El apóstrofe a la patria ausente estructura toda la segunda parte del poema."},
+  {id:105, palabra:"enumeración", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:3, def:"Acumulación de elementos, generalmente en serie, con efecto expresivo.", ej:"La enumeración caótica de objetos refleja el desorden interior del narrador."},
+  {id:106, palabra:"in medias res", tipo:"loc. lat.", cat:"lit", bloque:"Narratología", semana:4, def:"Técnica narrativa que inicia el relato en mitad de la acción, sin exposición previa.", ej:"La novela arranca in medias res, lo que obliga al lector a reconstruir los antecedentes."},
+  {id:107, palabra:"analepsis", tipo:"s.f.", cat:"lit", bloque:"Narratología", semana:4, def:"Ruptura del orden cronológico que retrocede a un momento anterior (flashback).", ej:"La analepsis del capítulo tercero revela el origen del conflicto familiar."},
+  {id:108, palabra:"prolepsis", tipo:"s.f.", cat:"lit", bloque:"Narratología", semana:4, def:"Anticipación narrativa de un hecho que ocurrirá más adelante en la historia.", ej:"La prolepsis inicial desvela el desenlace trágico antes de narrar los hechos que lo provocan."},
+  {id:109, palabra:"narrador omnisciente", tipo:"loc.", cat:"lit", bloque:"Narratología", semana:4, def:"Voz narrativa que conoce pensamientos, sentimientos y hechos ajenos a la percepción de los personajes.", ej:"El narrador omnisciente contrasta la percepción errónea del protagonista con la verdad de los hechos."},
+  {id:110, palabra:"focalización", tipo:"s.f.", cat:"lit", bloque:"Narratología", semana:4, def:"Perspectiva o punto de vista desde el cual se filtra la información narrativa; puede ser interna (limitada al conocimiento de un personaje) o externa (la de un observador ajeno a la conciencia de los personajes).", ej:"La focalización interna limita al lector al conocimiento parcial del personaje principal, mientras que la externa lo sitúa como un observador ajeno a sus pensamientos."},
+  {id:111, palabra:"leitmotiv", tipo:"s.m.", cat:"lit", bloque:"Narratología", semana:4, def:"Elemento (imagen, frase, símbolo) que se repite a lo largo de una obra con valor estructurante.", ej:"El leitmotiv del reloj detenido recorre toda la novela como símbolo de la memoria estancada."},
+  {id:112, palabra:"clímax narrativo", tipo:"loc.", cat:"lit", bloque:"Narratología", semana:4, def:"Punto de máxima tensión o intensidad dramática en el desarrollo de la acción.", ej:"El clímax narrativo coincide con la revelación de la verdadera identidad del forastero."},
+  {id:130, palabra:"verosímil", tipo:"adj.", cat:"adj", semana:1, def:"Que resulta creíble dentro de la lógica interna del texto, aunque no sea real.", ej:"El desenlace resulta perfectamente verosímil dentro de la lógica fantástica que el autor ha construido."},
+  {id:131, palabra:"inverosímil", tipo:"adj.", cat:"adj", semana:1, def:"Que carece de credibilidad dentro de la lógica interna del texto.", ej:"La reacción del personaje resulta inverosímil tras lo narrado en el capítulo anterior."},
+  {id:132, palabra:"connotativo/a", tipo:"adj.", cat:"adj", semana:1, def:"Que añade significados subjetivos o afectivos más allá del sentido literal.", ej:"El lenguaje connotativo del poema envuelve cada objeto cotidiano de un halo simbólico."},
+  {id:133, palabra:"elíptico/a", tipo:"adj.", cat:"adj", semana:1, def:"Que omite elementos recuperables por el contexto, propio de un estilo condensado.", ej:"El estilo elíptico del relato obliga al lector a completar los vacíos narrativos."},
+  {id:135, palabra:"ambiguo/a", tipo:"adj.", cat:"adj", semana:1, def:"Que admite más de una interpretación.", ej:"El final ambiguo deja sin resolver la culpabilidad del narrador."},
+  {id:136, palabra:"polifónico/a", tipo:"adj.", cat:"adj", semana:1, def:"Que integra varias voces o perspectivas dentro de un mismo texto.", ej:"La novela polifónica alterna la voz de cuatro narradores distintos."},
+  {id:137, palabra:"sugerente", tipo:"adj.", cat:"adj", semana:2, def:"Que evoca significados o sensaciones sin explicitarlos del todo.", ej:"La imagen del jardín cerrado resulta especialmente sugerente en este contexto."},
+  {id:138, palabra:"evocador/a", tipo:"adj.", cat:"adj", semana:2, def:"Que suscita recuerdos, imágenes o sensaciones en quien lee.", ej:"El léxico evocador del pasaje traslada al lector a la infancia del narrador."},
+  {id:139, palabra:"contundente", tipo:"adj.", cat:"adj", semana:2, def:"Rotundo, que produce un efecto fuerte e inmediato.", ej:"La última frase del capítulo resulta contundente y cierra el argumento sin ambigüedades."},
+  {id:140, palabra:"incisivo/a", tipo:"adj.", cat:"adj", semana:2, def:"Agudo y penetrante en la crítica o el juicio que expresa.", ej:"El tono incisivo del ensayo no deja indiferente al lector."},
+  {id:141, palabra:"mordaz", tipo:"adj.", cat:"adj", semana:2, def:"Crítico de forma cáustica o hiriente.", ej:"El humor mordaz del narrador ridiculiza las convenciones sociales de la época."},
+  {id:142, palabra:"sobrio/a", tipo:"adj.", cat:"adj", semana:2, def:"Contenido, sin artificios expresivos excesivos.", ej:"El estilo sobrio del relato refuerza, por contraste, la intensidad del drama."},
+  {id:143, palabra:"grandilocuente", tipo:"adj.", cat:"adj", semana:2, def:"De estilo pomposo o excesivamente solemne.", ej:"El discurso grandilocuente del personaje resulta casi paródico."},
+  {id:144, palabra:"lírico/a", tipo:"adj.", cat:"adj", semana:3, def:"De tono subjetivo y emotivo, propio de la expresión poética.", ej:"El pasaje adquiere un tono lírico que se aparta momentáneamente de la acción."},
+  {id:145, palabra:"vívido/a", tipo:"adj.", cat:"adj", semana:3, def:"Que produce una impresión intensa y realista en quien lee.", ej:"La descripción vívida del paisaje sitúa al lector dentro de la escena."},
+  {id:146, palabra:"plausible", tipo:"adj.", cat:"adj", semana:3, def:"Admisible, que resulta razonable o aceptable.", ej:"Esta interpretación simbólica del título resulta plausible a la luz del desenlace."},
+  {id:147, palabra:"logrado/a", tipo:"adj.", cat:"adj", semana:3, def:"Conseguido con acierto, bien resuelto desde el punto de vista estilístico.", ej:"El contraste entre ambos personajes está especialmente logrado."},
+  {id:148, palabra:"desacertado/a", tipo:"adj.", cat:"adj", semana:3, def:"Mal resuelto o inapropiado en su efecto.", ej:"El símil resulta algo desacertado, pues rompe el tono grave del pasaje."},
+  {id:149, palabra:"certero/a", tipo:"adj.", cat:"adj", semana:3, def:"Preciso, que da en el punto exacto.", ej:"La elección léxica es certera y evita cualquier ambigüedad innecesaria."},
+  {id:150, palabra:"prolijo/a", tipo:"adj.", cat:"adj", semana:3, def:"Excesivamente extenso o detallado.", ej:"La descripción resulta algo prolija y ralentiza el ritmo narrativo."},
+  {id:151, palabra:"conciso/a", tipo:"adj.", cat:"adj", semana:4, def:"Breve y preciso, sin palabras ni información innecesarias.", ej:"El estilo conciso del cuento contrasta con la prosa barroca de otros autores del periodo."},
+  {id:152, palabra:"elocuente", tipo:"adj.", cat:"adj", semana:4, def:"Que se expresa con eficacia y fuerza persuasiva.", ej:"El silencio final resulta más elocuente que cualquier explicación."},
+  {id:153, palabra:"matizado/a", tipo:"adj.", cat:"adj", semana:4, def:"Precisado con detalle, sin afirmaciones tajantes.", ej:"El juicio moral que propone el texto es matizado, no maniqueo."},
+  {id:154, palabra:"hiperbólico/a", tipo:"adj.", cat:"adj", semana:4, def:"Exagerado, propio de la hipérbole.", ej:"El lenguaje hiperbólico del pregonero contrasta con la sobriedad del resto del texto."},
+  {id:155, palabra:"paradójico/a", tipo:"adj.", cat:"adj", semana:4, def:"Que encierra una aparente contradicción reveladora.", ej:"Resulta paradójico que el personaje busque la libertad encerrándose en su propia casa."},
+  {id:156, palabra:"desgarrador/a", tipo:"adj.", cat:"adj", semana:4, def:"Que produce un fuerte impacto emocional, de dolor intenso.", ej:"El testimonio final resulta desgarrador y rompe el tono contenido del resto del texto."},
+  {id:157, palabra:"críptico/a", tipo:"adj.", cat:"adj", semana:4, def:"De sentido oscuro o difícil de descifrar.", ej:"El título críptico exige una segunda lectura para desvelar su sentido."},
+  {id:158, palabra:"mecanismo", tipo:"s.m.", cat:"ling", bloque:"Metalenguaje del análisis", semana:1, def:"Estructura o proceso interno del texto que organiza el lenguaje, la forma o la narrativa para producir un efecto determinado.", ej:"La focalización interna funciona como mecanismo narrativo que permite acceder a los pensamientos de un personaje concreto."},
+  {id:159, palabra:"elemento", tipo:"s.m.", cat:"ling", bloque:"Metalenguaje del análisis", semana:1, def:"Parte constitutiva y esencial del texto, de naturaleza temática, estructural, lingüística o estilística.", ej:"El punto de vista y el tiempo narrativo son elementos esenciales para analizar cualquier obra de ficción."},
+  {id:160, palabra:"técnica", tipo:"s.f.", cat:"ling", bloque:"Metalenguaje del análisis", semana:1, def:"Procedimiento específico y deliberado que el autor emplea para construir el texto o producir un efecto en el lector.", ej:"El monólogo interior es una técnica que revela el flujo de pensamiento del personaje sin mediación narrativa."},
+  {id:161, palabra:"estrategia", tipo:"s.f.", cat:"ling", bloque:"Metalenguaje del análisis", semana:2, def:"Elección consciente del autor orientada a guiar o condicionar la respuesta del lector, con una intención comunicativa definida.", ej:"El uso de la ironía dramática es una estrategia que otorga al lector información que el personaje desconoce."},
+  {id:162, palabra:"recurso", tipo:"s.m.", cat:"ling", bloque:"Metalenguaje del análisis", semana:2, def:"Medio expresivo, lingüístico o visual, del que se vale el autor para enriquecer el texto y transmitir ideas o emociones.", ej:"El símil y la aliteración son recursos que intensifican la expresividad de un pasaje."},
+  {id:163, palabra:"en primer lugar", tipo:"loc. adv.", cat:"conectores", bloque:"Ordenar el discurso", semana:1, def:"Introduce el primer punto de una enumeración o argumentación.", ej:"En primer lugar, conviene situar el texto en su contexto de producción."},
+  {id:164, palabra:"en segundo lugar", tipo:"loc. adv.", cat:"conectores", bloque:"Ordenar el discurso", semana:2, def:"Introduce el segundo punto de una serie argumentativa.", ej:"En segundo lugar, el uso del monólogo interior revela la fragmentación psicológica del personaje."},
+  {id:165, palabra:"en último lugar", tipo:"loc. adv.", cat:"conectores", bloque:"Ordenar el discurso", semana:3, def:"Introduce el punto final de una enumeración.", ej:"En último lugar, cabe analizar el efecto del desenlace abierto sobre la interpretación global de la obra."},
+  {id:166, palabra:"por último", tipo:"loc. adv.", cat:"conectores", bloque:"Ordenar el discurso", semana:4, def:"Marca el último elemento de una serie o argumentación.", ej:"Por último, el título adquiere un valor simbólico que solo se revela al concluir la lectura."},
+  {id:167, palabra:"para empezar", tipo:"loc. adv.", cat:"conectores", bloque:"Ordenar el discurso", semana:1, def:"Introduce el primer argumento de una exposición, en un registro algo menos formal que 'en primer lugar'.", ej:"Para empezar, resulta pertinente situar el poema dentro de la producción tardía del autor."},
+  {id:168, palabra:"a continuación", tipo:"loc. adv.", cat:"conectores", bloque:"Ordenar el discurso", semana:2, def:"Anuncia el desarrollo inmediato de la idea siguiente.", ej:"A continuación, se analizará el efecto del cambio de focalización en el tercer capítulo."},
+  {id:169, palabra:"primero / después / luego", tipo:"loc. adv.", cat:"conectores", bloque:"Ordenar el discurso", semana:3, def:"Serie de adverbios que marcan el orden temporal o expositivo de las ideas.", ej:"Primero se presenta el conflicto; después, se desarrolla mediante el diálogo; luego, estalla en el clímax."},
+  {id:170, palabra:"finalmente", tipo:"adv.", cat:"conectores", bloque:"Ordenar el discurso", semana:4, def:"Introduce la última idea o conclusión de una serie.", ej:"Finalmente, la imagen del espejo roto cierra circularmente la estructura simbólica del relato."},
+  {id:171, palabra:"con relación a / en relación con", tipo:"loc. prep.", cat:"conectores", bloque:"Introducir el tema", semana:1, def:"Introduce el tema o aspecto que se va a desarrollar, vinculándolo con lo anterior.", ej:"Con relación al lenguaje empleado, destaca la abundancia de tecnicismos jurídicos."},
+  {id:172, palabra:"por otra parte", tipo:"loc. adv.", cat:"conectores", bloque:"Añadir ideas", semana:2, def:"Introduce un aspecto adicional o distinto dentro del mismo argumento.", ej:"Por otra parte, el ritmo entrecortado de la sintaxis refuerza la ansiedad del hablante lírico."},
+  {id:173, palabra:"acerca de", tipo:"loc. prep.", cat:"conectores", bloque:"Introducir el tema", semana:3, def:"Introduce el asunto o tema sobre el que versa el comentario.", ej:"El ensayo reflexiona acerca de la función social de la memoria colectiva."},
+  {id:174, palabra:"además", tipo:"adv.", cat:"conectores", bloque:"Añadir ideas", semana:4, def:"Añade una idea o argumento a lo ya expuesto.", ej:"El texto denuncia la desigualdad; además, cuestiona la pasividad del lector ante ella."},
+  {id:175, palabra:"igualmente", tipo:"adv.", cat:"conectores", bloque:"Añadir ideas", semana:1, def:"Añade una idea en la misma línea argumentativa que la anterior, con matiz de equivalencia.", ej:"El narrador desconfía de la memoria; igualmente, pone en duda la fiabilidad del lenguaje."},
+  {id:176, palabra:"al mismo tiempo", tipo:"loc. adv.", cat:"conectores", bloque:"Añadir ideas", semana:2, def:"Indica simultaneidad entre dos ideas, acciones o efectos.", ej:"El humor aligera el tono del relato y, al mismo tiempo, permite deslizar una crítica social."},
+  {id:177, palabra:"así pues", tipo:"loc. adv.", cat:"conectores", bloque:"Consecuencia", semana:3, def:"Introduce una consecuencia derivada de lo argumentado, con valor conclusivo intermedio.", ej:"Así pues, la estructura fragmentada no es un defecto formal, sino un reflejo del caos interior del narrador."},
+  {id:178, palabra:"es decir", tipo:"loc. adv.", cat:"conectores", bloque:"Reformular y aclarar", semana:4, def:"Introduce una reformulación o aclaración de lo dicho.", ej:"El personaje es un antihéroe, es decir, carece de las virtudes tradicionalmente asociadas al protagonista."},
+  {id:179, palabra:"esto es", tipo:"loc. adv.", cat:"conectores", bloque:"Reformular y aclarar", semana:1, def:"Sinónimo de 'es decir'; introduce una precisión aclaratoria.", ej:"El relato se construye in medias res, esto es, comienza en mitad de la acción."},
+  {id:180, palabra:"conviene subrayar", tipo:"loc. v.", cat:"conectores", bloque:"Destacar y reforzar", semana:2, def:"Fórmula para destacar una idea que merece especial atención en el análisis.", ej:"Conviene subrayar que el cambio de narrador coincide con el punto de inflexión de la trama."},
+  {id:181, palabra:"dicho de otra manera", tipo:"loc. adv.", cat:"conectores", bloque:"Reformular y aclarar", semana:3, def:"Introduce una reformulación de la idea anterior con otras palabras.", ej:"El lenguaje se vuelve cada vez más elíptico; dicho de otra manera, el silencio gana terreno sobre la palabra."},
+  {id:182, palabra:"en otras palabras", tipo:"loc. adv.", cat:"conectores", bloque:"Reformular y aclarar", semana:4, def:"Sinónimo de 'dicho de otra manera'; reformula lo expresado para mayor claridad.", ej:"El narrador es poco fiable; en otras palabras, su versión de los hechos debe leerse con distancia crítica."},
+  {id:183, palabra:"sin embargo", tipo:"loc. adv.", cat:"conectores", bloque:"Oposición y concesión", semana:1, def:"Conector de oposición de uso general, equivalente a 'no obstante' pero de mayor frecuencia.", ej:"El desenlace parece cerrar la trama; sin embargo, deja abiertas varias preguntas morales."},
+  {id:184, palabra:"al contrario", tipo:"loc. adv.", cat:"conectores", bloque:"Oposición y concesión", semana:2, def:"Introduce una idea que se opone frontalmente a la anterior.", ej:"El personaje no busca venganza; al contrario, su silencio final expresa una forma de perdón."},
+  {id:185, palabra:"a pesar de", tipo:"loc. prep.", cat:"conectores", bloque:"Oposición y concesión", semana:3, def:"Introduce una circunstancia que no impide el cumplimiento de lo expresado.", ej:"A pesar de la brevedad del poema, su carga simbólica resulta extraordinaria."},
+  {id:186, palabra:"en cambio", tipo:"loc. adv.", cat:"conectores", bloque:"Oposición y concesión", semana:4, def:"Marca un contraste entre dos elementos o ideas.", ej:"El primer capítulo emplea un narrador omnisciente; el segundo, en cambio, adopta una focalización interna."},
+  {id:187, palabra:"ya que", tipo:"loc. conj.", cat:"conectores", bloque:"Causa", semana:1, def:"Introduce la causa de lo afirmado anteriormente.", ej:"El lector debe reconstruir la cronología, ya que la narración avanza mediante analepsis constantes."},
+  {id:188, palabra:"puesto que / dado que", tipo:"loc. conj.", cat:"conectores", bloque:"Causa", semana:2, def:"Introduce una causa conocida o compartida por el lector, con valor explicativo.", ej:"Puesto que el poema pertenece al periodo de exilio del autor, la nostalgia impregna cada verso."},
+  {id:189, palabra:"a causa de", tipo:"loc. prep.", cat:"conectores", bloque:"Causa", semana:3, def:"Introduce la causa de un hecho o estado, de forma más directa.", ej:"El protagonista pierde la confianza del lector a causa de sus constantes contradicciones."},
+  {id:190, palabra:"debido a", tipo:"loc. prep.", cat:"conectores", bloque:"Causa", semana:4, def:"Sinónimo formal de 'a causa de'.", ej:"Debido a la ambigüedad del final, la crítica ha propuesto lecturas opuestas de la novela."},
+  {id:191, palabra:"visto que", tipo:"loc. conj.", cat:"conectores", bloque:"Causa", semana:1, def:"Introduce una causa evidente o constatada, propia de un registro algo más oral.", ej:"Visto que el narrador oculta información desde el principio, su fiabilidad queda comprometida."},
+  {id:192, palabra:"en resumen", tipo:"loc. adv.", cat:"conectores", bloque:"Retomar y concluir", semana:2, def:"Introduce una síntesis breve de lo argumentado.", ej:"En resumen, el texto combina denuncia social y exploración íntima del duelo."},
+  {id:193, palabra:"en pocas palabras", tipo:"loc. adv.", cat:"conectores", bloque:"Retomar y concluir", semana:3, def:"Sintetiza de forma algo más distendida lo expuesto previamente.", ej:"En pocas palabras, el poema convierte la pérdida en materia estética."},
+  {id:194, palabra:"en suma", tipo:"loc. adv.", cat:"conectores", bloque:"Retomar y concluir", semana:4, def:"Variante culta de 'en resumen', propia de un registro elevado.", ej:"En suma, la obra articula una crítica velada al poder a través de la alegoría animal."},
+  {id:195, palabra:"globalmente", tipo:"adv.", cat:"conectores", bloque:"Retomar y concluir", semana:1, def:"Introduce una valoración de conjunto sobre el texto o su efecto.", ej:"Globalmente, la estructura circular refuerza la sensación de destino ineludible."},
+  {id:196, palabra:"en conclusión", tipo:"loc. adv.", cat:"conectores", bloque:"Retomar y concluir", semana:2, def:"Marca el cierre argumentativo de un análisis o ensayo.", ej:"En conclusión, el autor subordina la anécdota individual a una reflexión colectiva sobre la memoria."},
+  {id:197, palabra:"para finalizar / para terminar", tipo:"loc. v.", cat:"conectores", bloque:"Retomar y concluir", semana:3, def:"Marca formalmente el cierre de la exposición, oral o escrita.", ej:"Para finalizar, retomo la imagen inicial del reloj detenido como clave de toda la novela."},
+  {id:198, palabra:"con esto quiero decir", tipo:"loc. v.", cat:"conectores", bloque:"Reformular y aclarar", semana:1, def:"Introduce una aclaración de lo que se acaba de exponer, propia del registro oral formal.", ej:"Con esto quiero decir que la ironía no resta gravedad al tema, sino que la intensifica."},
+  {id:199, palabra:"en mi opinión", tipo:"loc. adv.", cat:"conectores", bloque:"Opinión e hipótesis", semana:2, def:"Fórmula estándar para introducir una valoración personal fundamentada.", ej:"En mi opinión, el uso del futuro narrativo anticipa la fatalidad del desenlace."},
+  {id:200, palabra:"a mi entender / a mi parecer", tipo:"loc. adv.", cat:"conectores", bloque:"Opinión e hipótesis", semana:3, def:"Introduce una interpretación personal, con matiz de prudencia.", ej:"A mi entender, la ambigüedad del final es deliberada y no un defecto de construcción."},
+  {id:201, palabra:"considero que", tipo:"loc. v.", cat:"conectores", bloque:"Opinión e hipótesis", semana:4, def:"Introduce una afirmación interpretativa argumentada.", ej:"Considero que el simbolismo del jardín reformula la relación del personaje con su pasado."},
+  {id:202, palabra:"personalmente", tipo:"adv.", cat:"conectores", bloque:"Opinión e hipótesis", semana:1, def:"Marca explícitamente que lo que sigue es una valoración subjetiva del hablante.", ej:"Personalmente, me parece que el humor cumple aquí una función defensiva más que cómica."},
+  {id:203, palabra:"es posible que", tipo:"loc. v.", cat:"conectores", bloque:"Opinión e hipótesis", semana:2, def:"Introduce una hipótesis interpretativa con grado moderado de certeza (rige subjuntivo).", ej:"Es posible que el autor busque, con este final abierto, implicar activamente al lector."},
+  {id:204, palabra:"es probable que", tipo:"loc. v.", cat:"conectores", bloque:"Opinión e hipótesis", semana:3, def:"Introduce una hipótesis interpretativa con mayor grado de certeza que 'es posible que' (rige subjuntivo).", ej:"Es probable que la elección del narrador infantil responda a una estrategia de distanciamiento crítico."},
+  {id:205, palabra:"probablemente", tipo:"adv.", cat:"conectores", bloque:"Opinión e hipótesis", semana:4, def:"Matiza una afirmación como altamente plausible, sin llegar a la certeza.", ej:"Probablemente el título funcione como clave de lectura para todo el poemario."},
+  {id:206, palabra:"posiblemente", tipo:"adv.", cat:"conectores", bloque:"Opinión e hipótesis", semana:1, def:"Introduce una posibilidad interpretativa, con menor grado de certeza que 'probablemente'.", ej:"Posiblemente el color blanco connote, en este contexto, vacío antes que pureza."},
+  {id:207, palabra:"quizá(s)", tipo:"adv.", cat:"conectores", bloque:"Opinión e hipótesis", semana:2, def:"Expresa duda o posibilidad, de uso frecuente en la interpretación oral de un texto.", ej:"Quizá el silencio final del personaje diga más que cualquier palabra."},
+  {id:208, palabra:"tal vez", tipo:"adv.", cat:"conectores", bloque:"Opinión e hipótesis", semana:3, def:"Sinónimo de 'quizá', con el mismo valor de posibilidad.", ej:"Tal vez el lector deba desconfiar tanto del narrador como del propio protagonista."},
+  {id:222, palabra:"delimitar", tipo:"v. tr.", cat:"verbos", bloque:"Relacionar y estructurar", semana:1, def:"Precisar los límites exactos del tema, el objeto o el periodo que abarcará una investigación.", ej:"Antes de leer en profundidad, es necesario delimitar el corpus y la temática del trabajo."},
+  {id:223, palabra:"postular", tipo:"v. tr.", cat:"verbos", bloque:"Argumentar y valorar", semana:2, def:"Proponer una idea o teoría como punto de partida de un razonamiento, sin darla aún por demostrada.", ej:"El artículo postula que el motivo del espejo estructura toda la novela."},
+  {id:224, palabra:"sustentar", tipo:"v. tr.", cat:"verbos", bloque:"Argumentar y valorar", semana:2, def:"Argumentar y defender una hipótesis con razones y evidencias sólidas.", ej:"Los ejemplos citados sustentan la hipótesis de una lectura alegórica del poema."},
+  {id:225, palabra:"afianzar", tipo:"v. tr.", cat:"verbos", bloque:"Argumentar y valorar", semana:3, def:"Reforzar o consolidar un conocimiento o una interpretación ya existente sobre un objeto de estudio.", ej:"El nuevo hallazgo documental afianza la hipótesis biográfica sobre el poema."},
+  {id:226, palabra:"revaluar", tipo:"v. tr.", cat:"verbos", bloque:"Argumentar y valorar", semana:3, def:"Volver a valorar una interpretación o un consenso crítico establecido, cuestionando su vigencia.", ej:"La crítica reciente ha revaluado la lectura costumbrista de la novela."},
+  {id:227, palabra:"sistematizar", tipo:"v. tr.", cat:"verbos", bloque:"Relacionar y estructurar", semana:4, def:"Organizar de forma ordenada y coherente la información o los argumentos recogidos en una investigación.", ej:"Es necesario sistematizar las distintas propuestas críticas antes de redactar el estado de la cuestión."},
+  {id:228, palabra:"contrastar", tipo:"v. tr.", cat:"verbos", bloque:"Relacionar y estructurar", semana:4, def:"Comparar ideas, lecturas o fuentes para poner de relieve sus semejanzas y diferencias.", ej:"Contrastar la hipótesis propia con la bibliografía crítica permite afinar el argumento."},
+  {id:229, palabra:"consignar", tipo:"v. tr.", cat:"verbos", bloque:"Argumentar y valorar", semana:1, def:"Registrar formalmente una fuente o una referencia para atribuir correctamente la información utilizada.", ej:"Olvidar consignar una fuente, aunque sea de forma involuntaria, puede constituir un plagio."},
+  {id:230, palabra:"ethos", tipo:"s.m.", cat:"ling", bloque:"Argumentación y persuasión", semana:1, def:"Apelación retórica que persuade apoyándose en la credibilidad, autoridad o carácter moral de quien habla.", ej:"El narrador construye su ethos como testigo directo de los hechos para reforzar la credibilidad del relato."},
+  {id:231, palabra:"pathos", tipo:"s.m.", cat:"ling", bloque:"Argumentación y persuasión", semana:2, def:"Apelación retórica que persuade movilizando las emociones del receptor.", ej:"La acumulación de imágenes dolorosas en el discurso final apela abiertamente al pathos del oyente."},
+  {id:232, palabra:"logos", tipo:"s.m.", cat:"ling", bloque:"Argumentación y persuasión", semana:3, def:"Apelación retórica que persuade mediante argumentos racionales y la lógica del razonamiento.", ej:"El ensayo se apoya en el logos, encadenando datos y silogismos antes de llegar a su conclusión."},
+  {id:233, palabra:"función expresiva (o emotiva)", tipo:"loc.", cat:"ling", bloque:"Comunicación y funciones del lenguaje", semana:1, def:"Función del lenguaje mediante la cual el emisor transmite su subjetividad: sus ideas, pensamientos, opiniones o estados de ánimo, generalmente en primera persona.", ej:"La función expresiva domina el ensayo, con juicios de valor y una aproximación personal y afectiva al tema."},
+  {id:234, palabra:"función apelativa", tipo:"loc.", cat:"ling", bloque:"Comunicación y funciones del lenguaje", semana:2, def:"Función del lenguaje orientada a producir una reacción o un cambio de actitud en el receptor, mediante imperativos, interrogaciones retóricas o la segunda persona.", ej:"El uso del plural asociativo 'nosotros' refuerza la función apelativa al implicar directamente al lector."},
+  {id:235, palabra:"función representativa (o referencial)", tipo:"loc.", cat:"ling", bloque:"Comunicación y funciones del lenguaje", semana:3, def:"Función del lenguaje centrada en informar de manera objetiva sobre la realidad, con predominio del léxico denotativo y las oraciones enunciativas.", ej:"Los datos cuantificados y las referencias a fuentes fiables refuerzan la función representativa del texto."},
+  {id:236, palabra:"función poética (o estética)", tipo:"loc.", cat:"ling", bloque:"Comunicación y funciones del lenguaje", semana:4, def:"Función del lenguaje que llama la atención sobre la forma del propio mensaje mediante recursos literarios, ritmo o juegos lingüísticos.", ej:"El paralelismo y las enumeraciones asindéticas evidencian la función poética del ensayo."},
+  {id:237, palabra:"función fática (o de contacto)", tipo:"loc.", cat:"ling", bloque:"Comunicación y funciones del lenguaje", semana:1, def:"Función del lenguaje que comprueba o mantiene abierto el canal de comunicación entre emisor y receptor.", ej:"Las muletillas y las frases hechas cumplen una función fática en la conversación."},
+  {id:238, palabra:"función metalingüística", tipo:"loc.", cat:"ling", bloque:"Comunicación y funciones del lenguaje", semana:2, def:"Función del lenguaje mediante la cual el código se emplea para referirse a sí mismo, por ejemplo al definir o comentar una palabra.", ej:"La referencia etimológica al nombre de la protagonista activa, de forma sutil, la función metalingüística."},
+  {id:239, palabra:"pirámide invertida", tipo:"loc.", cat:"ling", bloque:"Estructura y cohesión", semana:3, def:"Estructura informativa que ordena los datos de mayor a menor relevancia, característica de la noticia periodística.", ej:"La noticia sigue la estructura de pirámide invertida, con el dato más relevante en el primer párrafo."},
+  {id:240, palabra:"recurrencia (léxica)", tipo:"s.f.", cat:"ling", bloque:"Estructura y cohesión", semana:4, def:"Mecanismo de cohesión que consiste en la repetición de palabras clave a lo largo de un texto.", ej:"La recurrencia del término 'analfabetismo' mantiene la cohesión temática del ensayo."},
+  {id:241, palabra:"progresión temática", tipo:"loc.", cat:"ling", bloque:"Estructura y cohesión", semana:1, def:"Avance ordenado de la información dentro de un texto, que mantiene la unidad de sentido en torno a un mismo tema.", ej:"La progresión temática del artículo permite introducir nuevos datos sin perder de vista la idea central."},
+  {id:242, palabra:"modalidad oracional", tipo:"loc.", cat:"ling", bloque:"Nivel morfosintáctico", semana:2, def:"Tipo de enunciado (enunciativo, interrogativo, exclamativo, exhortativo, dubitativo o desiderativo) según la actitud del hablante ante lo que dice.", ej:"El predominio de la modalidad oracional enunciativa refuerza el enfoque objetivo del texto."},
+  {id:243, palabra:"nominalización", tipo:"s.f.", cat:"ling", bloque:"Nivel morfosintáctico", semana:3, def:"Transformación de un verbo o un adjetivo en un sustantivo, propia de un estilo denso, abstracto y objetivo.", ej:"La nominalización de los procesos ('la resolución', en vez de 'resolver') aporta formalidad al informe."},
+  {id:244, palabra:"oración impersonal", tipo:"loc.", cat:"ling", bloque:"Nivel morfosintáctico", semana:4, def:"Construcción sintáctica sin sujeto explícito ni agente determinado, empleada para reforzar la objetividad.", ej:"Las oraciones impersonales ('nunca había habido tantos') evitan señalar a un responsable concreto."},
+  {id:245, palabra:"pasiva refleja", tipo:"loc.", cat:"ling", bloque:"Nivel morfosintáctico", semana:1, def:"Construcción con 'se' que oculta al agente de la acción y centra la atención en el proceso o el resultado.", ej:"La pasiva refleja 'se han detectado varios casos' elude mencionar quién los detectó."},
+  {id:246, palabra:"aposición (explicativa/especificativa)", tipo:"s.f.", cat:"ling", bloque:"Nivel morfosintáctico", semana:2, def:"Expresión que se sitúa junto a otra para precisarla o reformularla, con valor explicativo o especificativo.", ej:"La aposición 'una mujer analfabeta' precisa la identidad del sujeto mencionado antes."},
+  {id:247, palabra:"plural asociativo", tipo:"loc.", cat:"ling", bloque:"Nivel morfosintáctico", semana:3, def:"Uso del plural (especialmente 'nosotros') para implicar al receptor en la reflexión del emisor, generando cercanía.", ej:"El plural asociativo 'nosotros' y 'nuestra casa' involucra al lector desde el principio del ensayo."},
+  {id:248, palabra:"imperativo (uso apelativo)", tipo:"loc.", cat:"ling", bloque:"Nivel morfosintáctico", semana:4, def:"Modo verbal que ordena, ruega o invita a la acción; propio de la función apelativa.", ej:"El uso del imperativo en el eslogan busca una reacción inmediata del receptor."},
+  {id:249, palabra:"apelación mediante la 2ª persona", tipo:"loc.", cat:"ling", bloque:"Nivel morfosintáctico", semana:1, def:"Estrategia que implica directamente al receptor dirigiéndose a él mediante pronombres o formas verbales de segunda persona.", ej:"La apelación mediante la segunda persona ('tú puedes...') traslada la responsabilidad al receptor."},
+  {id:250, palabra:"adjetivo valorativo", tipo:"loc.", cat:"ling", bloque:"Nivel morfosintáctico", semana:2, def:"Adjetivo que expresa una opinión o un juicio subjetivo del emisor, propio de la función expresiva.", ej:"Los adjetivos valorativos ('inquietante', 'oscuro') revelan la carga subjetiva del fragmento."},
+  {id:251, palabra:"estilo directo", tipo:"loc.", cat:"ling", bloque:"Nivel morfosintáctico", semana:3, def:"Reproducción literal de las palabras de un personaje, introducidas por guion o comillas y un verbo que anuncia la cita.", ej:"El estilo directo reproduce con exactitud el diálogo entre los personajes."},
+  {id:252, palabra:"estilo indirecto", tipo:"loc.", cat:"ling", bloque:"Nivel morfosintáctico", semana:4, def:"Reformulación de las palabras de un personaje mediante subordinación sustantiva, sin cita literal.", ej:"En estilo indirecto, la frase se convierte en 'dijo que vendría', sin reproducir las palabras exactas."},
+  {id:253, palabra:"hiperónimo", tipo:"s.m.", cat:"ling", bloque:"Nivel léxico-semántico", semana:1, def:"Palabra de significado general que incluye a otras más específicas.", ej:"'Ave' es hiperónimo de 'ruiseñor' y 'calandria'."},
+  {id:254, palabra:"hipónimo", tipo:"s.m.", cat:"ling", bloque:"Nivel léxico-semántico", semana:2, def:"Palabra de significado específico incluida dentro de un hiperónimo.", ej:"'Ruiseñor' y 'calandria' son hipónimos de 'ave'."},
+  {id:255, palabra:"familia léxica", tipo:"loc.", cat:"ling", bloque:"Nivel léxico-semántico", semana:3, def:"Conjunto de palabras que comparten una misma raíz y, por tanto, un origen y un significado relacionados.", ej:"'Libro', 'librero' y 'librería' forman parte de la misma familia léxica."},
+  {id:256, palabra:"eufemismo", tipo:"s.m.", cat:"ling", bloque:"Nivel léxico-semántico", semana:4, def:"Sustitución de una expresión por otra más suave, decorosa o menos directa.", ej:"'Invidente' funciona como eufemismo de 'ciego' en el registro formal."},
+  {id:257, palabra:"vocativo", tipo:"s.m.", cat:"ling", bloque:"Nivel morfosintáctico", semana:1, def:"Palabra o expresión que nombra directamente al receptor del mensaje, aislada por pausas o comas.", ej:"El vocativo 'amor' en el romance interpela directamente al sentimiento amoroso."},
+  {id:258, palabra:"interrogación retórica", tipo:"loc.", cat:"ling", bloque:"Argumentación y persuasión", semana:2, def:"Pregunta que no espera una respuesta explícita, empleada con fin expresivo, persuasivo o reflexivo.", ej:"'¿Mediante qué procedimientos lingüísticos lo consigue?' funciona como interrogación retórica que guía el comentario."},
+  {id:259, palabra:"pleonasmo", tipo:"s.m.", cat:"ling", bloque:"Nivel léxico-semántico", semana:3, def:"Uso de palabras innecesarias desde el punto de vista lógico, pero que refuerzan expresivamente el sentido.", ej:"'Lo vi con mis propios ojos' es un pleonasmo que intensifica la certeza de lo afirmado."},
+  {id:260, palabra:"silogismo", tipo:"s.m.", cat:"ling", bloque:"Argumentación y persuasión", semana:4, def:"Razonamiento lógico compuesto por dos premisas y una conclusión, propio del argumento racional (logos).", ej:"El anuncio construye un silogismo implícito para justificar su conclusión persuasiva."},
+  {id:261, palabra:"argumento de autoridad", tipo:"loc.", cat:"ling", bloque:"Argumentación y persuasión", semana:1, def:"Razonamiento que se apoya en la opinión o los datos de una fuente reconocida o experta para reforzar una tesis.", ej:"La cita del Instituto Nacional de Estadística funciona como argumento de autoridad."},
+  {id:262, palabra:"analogía", tipo:"s.f.", cat:"ling", bloque:"Argumentación y persuasión", semana:2, def:"Argumento que establece una semejanza entre dos situaciones para trasladar una conclusión de una a otra.", ej:"El autor recurre a la analogía entre la prisión física y la prisión emocional."},
+  {id:263, palabra:"tergiversación", tipo:"s.f.", cat:"ling", bloque:"Argumentación y persuasión", semana:3, def:"Deformación deliberada de los hechos o de las palabras de alguien para favorecer una interpretación interesada.", ej:"La propaganda recurre a la tergiversación de los datos para reforzar su mensaje."},
+  {id:264, palabra:"cotexto", tipo:"s.m.", cat:"ling", bloque:"Metalenguaje del análisis", semana:4, def:"Entorno lingüístico inmediato de un fragmento dentro de la obra a la que pertenece, distinto del contexto situacional o histórico.", ej:"Antes de interpretar el fragmento, conviene situarlo en su cotexto: la parte de la obra en que aparece."},
+  {id:265, palabra:"anagnórisis", tipo:"s.f.", cat:"lit", bloque:"Narratología", semana:1, def:"Momento en que un personaje descubre su verdadera identidad o la de otro, revelando información clave para la trama.", ej:"La anagnórisis final resuelve el enredo y permite el reconocimiento entre los personajes."},
+  {id:266, palabra:"metaliteratura (o metaficción)", tipo:"s.f.", cat:"lit", bloque:"Narratología", semana:2, def:"Reflexión de un texto sobre su propio proceso de escritura o narración.", ej:"Los comentarios del narrador sobre su propio relato son un ejemplo de metaliteratura."},
+  {id:267, palabra:"puesta en abismo", tipo:"loc.", cat:"lit", bloque:"Narratología", semana:3, def:"Inserción de una historia dentro de otra historia, que la refleja o comenta (mise en abyme).", ej:"El relato inserto funciona como una puesta en abismo de la novela que lo contiene."},
+  {id:268, palabra:"perspectivismo", tipo:"s.m.", cat:"lit", bloque:"Narratología", semana:4, def:"Presentación de una misma realidad desde varios puntos de vista, sin que exista una verdad única o cerrada.", ej:"El perspectivismo cervantino impide una lectura unívoca de los hechos narrados."},
+  {id:269, palabra:"onomástica (literaria)", tipo:"s.f.", cat:"lit", bloque:"Narratología", semana:1, def:"Estudio del valor simbólico o significativo de los nombres propios de los personajes.", ej:"La onomástica de 'Sophie', que significa 'sabiduría' en griego, resulta irónica dado el analfabetismo de la protagonista."},
+  {id:270, palabra:"narrador testigo", tipo:"loc.", cat:"lit", bloque:"Narratología", semana:2, def:"Narrador que relata los hechos como observador directo, sin ser su protagonista.", ej:"El narrador testigo cuenta lo que presenció sin intervenir en la acción principal."},
+  {id:271, palabra:"narrador protagonista", tipo:"loc.", cat:"lit", bloque:"Narratología", semana:3, def:"Narrador en primera persona que es, a la vez, el protagonista de la historia que cuenta.", ej:"En las autobiografías predomina el narrador protagonista."},
+  {id:272, palabra:"narrador periférico", tipo:"loc.", cat:"lit", bloque:"Narratología", semana:4, def:"Narrador en primera persona que es un personaje secundario y cuenta la historia de otro, el verdadero protagonista.", ej:"El narrador periférico observa de cerca al protagonista sin vivir él mismo los hechos centrales."},
+  {id:273, palabra:"voz poética", tipo:"loc.", cat:"lit", bloque:"Narratología", semana:1, def:"Instancia enunciativa desde la que habla un poema (persona, perspectiva y actitud), equivalente al narrador en la lírica.", ej:"La voz poética se presenta en primera persona central, sin ningún narrador intermediario."},
+  {id:274, palabra:"prosopografía", tipo:"s.f.", cat:"lit", bloque:"Descripción", semana:2, def:"Descripción de los rasgos físicos de una persona o un personaje.", ej:"La prosopografía del personaje insiste en sus rasgos envejecidos."},
+  {id:275, palabra:"etopeya", tipo:"s.f.", cat:"lit", bloque:"Descripción", semana:3, def:"Descripción de los rasgos psicológicos o morales de una persona o un personaje.", ej:"La etopeya revela la avaricia y la desconfianza del protagonista."},
+  {id:276, palabra:"retrato (literario)", tipo:"s.m.", cat:"lit", bloque:"Descripción", semana:4, def:"Descripción conjunta de los rasgos físicos y psicológicos de un personaje (prosopografía y etopeya combinadas).", ej:"El retrato inicial del personaje anticipa su evolución moral a lo largo de la novela."},
+  {id:277, palabra:"caricatura", tipo:"s.f.", cat:"lit", bloque:"Descripción", semana:1, def:"Descripción que exagera o deforma los rasgos de un personaje con intención satírica o crítica.", ej:"El autor recurre a la caricatura para ridiculizar a los personajes de la nobleza."},
+  {id:278, palabra:"topografía (descriptiva)", tipo:"s.f.", cat:"lit", bloque:"Descripción", semana:2, def:"Descripción detallada de un lugar o un espacio.", ej:"La topografía del pueblo sitúa al lector en un ambiente rural y cerrado."},
+  {id:279, palabra:"cronografía", tipo:"s.f.", cat:"lit", bloque:"Descripción", semana:3, def:"Descripción de una época, un momento histórico o un periodo temporal.", ej:"La cronografía inicial sitúa la acción en la España de posguerra."},
+  {id:280, palabra:"estrofa", tipo:"s.f.", cat:"lit", bloque:"Métrica", semana:4, def:"Conjunto de versos que forman una unidad métrica y de sentido dentro de un poema.", ej:"El romance se compone de una única estrofa de dieciséis versos octosílabos."},
+  {id:281, palabra:"verso libre", tipo:"loc.", cat:"lit", bloque:"Métrica", semana:1, def:"Verso que no se ajusta a un esquema fijo de métrica ni de rima.", ej:"El poema abandona la rima consonante y adopta el verso libre en su última parte."},
+  {id:283, palabra:"estructura circular", tipo:"loc.", cat:"lit", bloque:"Estructura", semana:3, def:"Organización de un texto en la que el final retoma elementos, imágenes o ideas del principio.", ej:"La estructura circular del poema refuerza la sensación de destino ineludible."},
+  {id:284, palabra:"paradoja", tipo:"s.f.", cat:"lit", bloque:"Figuras retóricas", semana:4, def:"Figura que reúne dos ideas aparentemente contradictorias que, juntas, encierran una verdad más profunda.", ej:"La paradoja del amor como prisión estructura buena parte de la poesía cortesana."},
+  {id:285, palabra:"relación título-texto", tipo:"loc.", cat:"lit", bloque:"Otros", semana:1, def:"Vínculo de sentido entre el título de una obra y su contenido, que orienta la interpretación global del texto.", ej:"La relación título-texto cobra sentido solo al final, cuando se revela su valor simbólico."},
+  {id:286, palabra:"tono", tipo:"s.m.", cat:"lit", bloque:"Otros", semana:2, def:"Actitud afectiva del emisor ante lo que expresa (melancólico, irónico, solemne...), perceptible en el conjunto del texto.", ej:"El tono nostálgico domina el relato, incluso en los pasajes más duros."},
+  {id:287, palabra:"acrecentar", tipo:"v. tr.", cat:"verbos", bloque:"Intensificar o atenuar", semana:1, def:"Aumentar o intensificar una cualidad o un efecto.", ej:"La rima aguda acrecienta la musicalidad del poema."},
+  {id:288, palabra:"agudizar", tipo:"v. tr.", cat:"verbos", bloque:"Intensificar o atenuar", semana:2, def:"Intensificar o hacer más aguda una sensación o un sentimiento.", ej:"El valor durativo del verbo agudiza el sentimiento de angustia del hablante."},
+  {id:289, palabra:"acentuar", tipo:"v. tr.", cat:"verbos", bloque:"Intensificar o atenuar", semana:3, def:"Poner de relieve o intensificar un rasgo o un contraste.", ej:"El cambio brusco de tono acentúa el contraste semántico entre las dos partes."},
+  {id:290, palabra:"sumir", tipo:"v. tr.", cat:"verbos", bloque:"Intensificar o atenuar", semana:4, def:"Hacer caer a alguien o algo en un determinado estado, generalmente negativo.", ej:"La muerte del ave sume al prisionero en la soledad."},
+  {id:291, palabra:"dotar (de)", tipo:"loc. v.", cat:"verbos", bloque:"Intensificar o atenuar", semana:1, def:"Proveer a un texto o a un personaje de una cualidad o un rasgo determinado.", ej:"Las figuras de repetición dotan al poema de un fuerte sabor popular."},
+  {id:292, palabra:"asomar", tipo:"v. tr.", cat:"verbos", bloque:"Mostrar y revelar", semana:2, def:"Manifestarse o aparecer de forma progresiva un rasgo dentro de un texto.", ej:"Desde el principio del párrafo asoma la primera persona del singular."},
+  {id:293, palabra:"disimular", tipo:"v. tr.", cat:"verbos", bloque:"Intensificar o atenuar", semana:3, def:"Ocultar o atenuar deliberadamente un rasgo, como la subjetividad, mediante recursos lingüísticos.", ej:"El autor disimula su subjetividad con procedimientos propios de la función representativa."},
+  {id:294, palabra:"primar", tipo:"v. tr.", cat:"verbos", bloque:"Intensificar o atenuar", semana:4, def:"Predominar o tener mayor peso un elemento sobre otro.", ej:"En el ensayo prima el fondo sobre la forma, aunque la función poética también está presente."},
+  {id:295, palabra:"embellecer", tipo:"v. tr.", cat:"verbos", bloque:"Intensificar o atenuar", semana:1, def:"Dotar a un texto de belleza formal mediante recursos literarios.", ej:"La autora utiliza recursos literarios para embellecer el texto y darle mayor fuerza expresiva."},
+  {id:296, palabra:"impactar", tipo:"v. tr.", cat:"verbos", bloque:"Intensificar o atenuar", semana:2, def:"Producir un efecto intenso o llamativo en el receptor.", ej:"La imagen busca impactar estéticamente al lector."},
+  {id:297, palabra:"guardar relación (con)", tipo:"loc. v.", cat:"verbos", bloque:"Relacionar y estructurar", semana:3, def:"Mantener una conexión de sentido, forma o estructura con otro elemento del texto.", ej:"Los versos tercero y cuarto guardan entre sí un paralelismo semántico."},
+  {id:298, palabra:"quedar patente / reforzado", tipo:"loc. v.", cat:"verbos", bloque:"Mostrar y revelar", semana:4, def:"Hacerse evidente o intensificarse un rasgo a lo largo del texto.", ej:"La subjetividad del emisor queda patente desde el principio y queda reforzada por el léxico connotativo."},
+  {id:299, palabra:"perseguir", tipo:"v. tr.", cat:"verbos", bloque:"Argumentar y valorar", semana:1, def:"Tener como objetivo o propósito comunicativo, frecuentemente con valor argumentativo.", ej:"La autora persigue dos intenciones: dar su opinión y apelar a la razón del lector."},
+  {id:300, palabra:"antitético/a", tipo:"adj.", cat:"adj", semana:1, def:"Que se opone o contrasta radicalmente con otro elemento del texto.", ej:"Las dos partes del romance son antitéticas: la alegría de mayo frente a la tristeza de la prisión."},
+  {id:301, palabra:"expresivo/a", tipo:"adj.", cat:"adj", semana:2, def:"Que transmite con fuerza un sentimiento o una actitud subjetiva.", ej:"El cambio brusco de registro resulta extraordinariamente expresivo."},
+  {id:302, palabra:"doloroso/a", tipo:"adj.", cat:"adj", semana:3, def:"Que produce o transmite dolor, tristeza o pesar.", ej:"El imperfecto 'cantaba' contrasta dolorosamente con el presente que lo precede."},
+  {id:303, palabra:"brusco/a", tipo:"adj.", cat:"adj", semana:4, def:"Que se produce de forma repentina y marcada, sin transición.", ej:"El cambio brusco de tono señala el paso de la descripción al lamento."},
+  {id:304, palabra:"afectivo/a", tipo:"adj.", cat:"adj", semana:1, def:"Que expresa cercanía emocional o carga sentimental.", ej:"El diminutivo 'avecilla' tiene un valor afectivo que intensifica la pérdida."},
+  {id:305, palabra:"distanciador/a", tipo:"adj.", cat:"adj", semana:2, def:"Que crea distancia entre el emisor y lo enunciado, propio de un enfoque objetivo.", ej:"La tercera persona distanciadora refuerza el valor enunciativo-declarativo del texto."},
+  {id:306, palabra:"fiable", tipo:"adj.", cat:"adj", semana:3, def:"Digno de confianza, dicho de una fuente o un dato.", ej:"Los datos proceden de una fuente fiable, lo que refuerza el argumento de autoridad."},
+  {id:307, palabra:"sutil", tipo:"adj.", cat:"adj", semana:4, def:"Que se manifiesta de manera delicada o poco evidente, sin resultar directo.", ej:"La función metalingüística aparece de manera sutil, casi imperceptible."},
+  {id:308, palabra:"imperceptible", tipo:"adj.", cat:"adj", semana:1, def:"Que apenas puede percibirse o notarse a simple vista.", ej:"El guiño irónico resulta casi imperceptible en una primera lectura."},
+  {id:309, palabra:"enfoque (objetivo/subjetivo)", tipo:"s.m.", cat:"ling", bloque:"Comunicación y funciones del lenguaje", semana:1, def:"Perspectiva desde la que el emisor presenta un tema: objetiva (distanciada, denotativa) o subjetiva (personal, valorativa).", ej:"El enfoque subjetivo se percibe en la primera persona y en los adjetivos valorativos."},
+  {id:310, palabra:"texto informativo", tipo:"loc.", cat:"ling", bloque:"Tipología y finalidad textual", semana:2, def:"Texto cuya finalidad es dar noticia de un hecho de manera clara y, en apariencia, objetiva.", ej:"La noticia es el texto informativo por excelencia de la prensa escrita."},
+  {id:311, palabra:"texto explicativo", tipo:"loc.", cat:"ling", bloque:"Tipología y finalidad textual", semana:3, def:"Texto cuya finalidad es indicar pautas o procedimientos o hacer comprensible un conocimiento.", ej:"El prospecto funciona como texto explicativo: detalla dosis, usos y precauciones."},
+  {id:312, palabra:"texto persuasivo", tipo:"loc.", cat:"ling", bloque:"Tipología y finalidad textual", semana:4, def:"Texto cuya finalidad es convencer al receptor para que piense o actúe de una determinada manera.", ej:"El anuncio institucional es un texto persuasivo que busca modificar la conducta del receptor."},
+  {id:313, palabra:"texto estético", tipo:"loc.", cat:"ling", bloque:"Tipología y finalidad textual", semana:1, def:"Texto cuya finalidad es crear mundos de ficción o belleza verbal; es la finalidad propia de la literatura.", ej:"El microrrelato, como texto estético, prioriza la forma sobre la información."},
+  {id:314, palabra:"texto preceptivo", tipo:"loc.", cat:"ling", bloque:"Tipología y finalidad textual", semana:2, def:"Texto cuya finalidad es ordenar, mandar u obligar, como las leyes o los reglamentos.", ej:"El reglamento del centro es un texto preceptivo con abundantes formas de obligación."},
+  {id:315, palabra:"titular", tipo:"s.m.", cat:"ling", bloque:"Tipología y finalidad textual", semana:3, def:"Enunciado breve que encabeza una noticia y condensa su información principal; a menudo carece de verbo.", ej:"El titular nominal elimina el verbo para ganar concisión e impacto."},
+  {id:316, palabra:"entradilla", tipo:"s.f.", cat:"ling", bloque:"Tipología y finalidad textual", semana:4, def:"Primer párrafo de una noticia, que resume lo esencial respondiendo a las preguntas básicas (qué, quién, cuándo, dónde, cómo, por qué).", ej:"La entradilla concentra los datos clave, fiel a la estructura de pirámide invertida."},
+  {id:317, palabra:"adecuación", tipo:"s.f.", cat:"ling", bloque:"Estructura y cohesión", semana:1, def:"Propiedad textual por la que el texto se ajusta a la situación comunicativa: receptor, finalidad, canal y registro.", ej:"La adecuación del texto es plena: el registro formal responde a un receptor especializado."},
+  {id:318, palabra:"estructura deductiva (analizante)", tipo:"loc.", cat:"ling", bloque:"Estructura y cohesión", semana:2, def:"Disposición que presenta primero la idea principal o tesis y después la desarrolla con argumentos o ejemplos.", ej:"El editorial sigue una estructura deductiva: la tesis aparece en la primera línea."},
+  {id:319, palabra:"estructura inductiva (sintetizante)", tipo:"loc.", cat:"ling", bloque:"Estructura y cohesión", semana:3, def:"Disposición que parte de datos, ejemplos o ideas secundarias y termina formulando la idea principal como conclusión.", ej:"La columna adopta una estructura inductiva y reserva la tesis para el cierre."},
+  {id:320, palabra:"estructura encuadrada", tipo:"loc.", cat:"ling", bloque:"Estructura y cohesión", semana:4, def:"Disposición deductiva en la que, al final, se retoma o reafirma la idea principal presentada al principio.", ej:"La estructura encuadrada refuerza la tesis al repetirla en la conclusión."},
+  {id:321, palabra:"estructura paralela", tipo:"loc.", cat:"ling", bloque:"Estructura y cohesión", semana:1, def:"Disposición que presenta varias ideas de igual importancia, sin que una dependa claramente de las demás.", ej:"El artículo sigue una estructura paralela: tres argumentos independientes con el mismo peso."},
+  {id:322, palabra:"estrategia emocional", tipo:"loc.", cat:"ling", bloque:"Argumentación y persuasión", semana:2, def:"Estrategia publicitaria que apela a las emociones del receptor y asocia el producto a valores deseables (belleza, éxito, juventud, bienestar).", ej:"La campaña recurre a una estrategia emocional al mostrar a una familia feliz alrededor del producto."},
+  {id:323, palabra:"estrategia racional", tipo:"loc.", cat:"ling", bloque:"Argumentación y persuasión", semana:3, def:"Estrategia publicitaria que apela a ideas lógicas y a valores aceptados como universales (seguridad, salud, igualdad).", ej:"La campaña de seguridad vial emplea una estrategia racional basada en datos de siniestralidad."},
+  {id:324, palabra:"estrategia subliminal", tipo:"loc.", cat:"ling", bloque:"Argumentación y persuasión", semana:4, def:"Estrategia que transmite ideas implícitas no percibidas conscientemente: imágenes ocultas, dobles sentidos, juegos tipográficos.", ej:"El oso escondido en la montaña del logotipo es un ejemplo de estrategia subliminal."},
+  {id:325, palabra:"eslogan", tipo:"s.m.", cat:"ling", bloque:"Argumentación y persuasión", semana:1, def:"Frase breve y memorable que condensa el mensaje clave de una campaña; suele ser rica en recursos lingüísticos.", ej:"El eslogan juega con la ambigüedad para fijarse en la memoria del receptor."},
+  {id:326, palabra:"fuentes selectivas", tipo:"loc.", cat:"ling", bloque:"Argumentación y persuasión", semana:2, def:"Estrategia propagandística que presenta los hechos de forma parcial, eligiendo solo los datos favorables.", ej:"El cartel recurre a fuentes selectivas: muestra los logros y silencia las consecuencias."},
+  {id:327, palabra:"omisión (deliberada)", tipo:"s.f.", cat:"ling", bloque:"Argumentación y persuasión", semana:3, def:"Estrategia que consiste en no mencionar intencionadamente un dato para favorecer una interpretación.", ej:"La omisión del coste real del servicio condiciona la percepción del receptor."},
+  {id:328, palabra:"texto sincrético", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:4, def:"Texto que combina varios códigos (verbal, visual, auditivo) para construir su significado.", ej:"El anuncio es un texto sincrético: imagen, tipografía y eslogan funcionan conjuntamente."},
+  {id:329, palabra:"diagramación", tipo:"s.f.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:1, def:"Distribución del espacio entre imágenes y texto en una página o soporte.", ej:"La diagramación sitúa la imagen en el centro y relega el cuerpo del texto a la parte inferior."},
+  {id:330, palabra:"elementos paralingüísticos", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:2, def:"Recursos que acompañan al lenguaje verbal para matizarlo: tipografía, mayúsculas, negrita, color del texto; en lo oral, entonación, volumen o pausas.", ej:"La negrita y el cuerpo de letra mayor del encabezamiento jerarquizan la información."},
+  {id:331, palabra:"jerarquía visual", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:3, def:"Orden de importancia que la composición establece entre los elementos, guiando el recorrido de la mirada.", ej:"La jerarquía visual conduce la mirada de la imagen al eslogan y, por último, al logotipo."},
+  {id:332, palabra:"encabezamiento", tipo:"s.m.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:4, def:"Texto destacado que abre un anuncio o cartel y capta la atención del receptor.", ej:"El encabezamiento plantea una pregunta que el cuerpo del anuncio responde."},
+  {id:333, palabra:"logotipo", tipo:"s.m.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:1, def:"Símbolo gráfico que identifica a una marca o institución.", ej:"El logotipo, situado a pie de página, firma el mensaje y le otorga credibilidad institucional."},
+  {id:334, palabra:"función identificadora (de la imagen)", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:2, def:"Función por la que la imagen identifica directamente el producto o la marca.", ej:"La fotografía del envase cumple una función identificadora."},
+  {id:336, palabra:"función complementaria (de la imagen)", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:4, def:"Función por la que la imagen añade información que el texto no proporciona.", ej:"La imagen cumple una función complementaria al mostrar las consecuencias que el texto solo insinúa."},
+  {id:337, palabra:"función de anclaje", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:1, def:"Función por la que el texto fija el sentido de la imagen y elimina posibles ambigüedades.", ej:"El pie de foto ejerce una función de anclaje que orienta la interpretación de la imagen."},
+  {id:338, palabra:"función retórica (de la imagen)", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:2, def:"Función por la que imagen y texto establecen una relación figurada (metáfora, paradoja, hipérbole).", ej:"La imagen tiene una función retórica: el adolescente partido en dos es una metáfora visual del acoso."},
+  {id:339, palabra:"plano detalle", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:3, def:"Encuadre que muestra una parte muy concreta de un objeto o de una persona.", ej:"El plano detalle de las manos concentra toda la carga emotiva de la escena."},
+  {id:340, palabra:"primer plano", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:4, def:"Encuadre que muestra el rostro, desde los hombros, y enfatiza la expresión emocional.", ej:"El primer plano obliga a sostener la mirada del personaje y personaliza el mensaje."},
+  {id:341, palabra:"plano medio", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:1, def:"Encuadre que muestra a la persona de la cintura hacia arriba, adecuado para mostrar la interacción.", ej:"El plano medio permite apreciar tanto el gesto como la actitud corporal de los personajes."},
+  {id:342, palabra:"plano americano", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:2, def:"Encuadre que corta a la persona a la altura de las rodillas.", ej:"El plano americano muestra al personaje en acción sin perder su expresión."},
+  {id:343, palabra:"plano entero", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:3, def:"Encuadre que muestra a la persona de cuerpo completo dentro de su entorno.", ej:"El plano entero sitúa a los sanitarios en el contexto de la emergencia."},
+  {id:344, palabra:"ángulo picado", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:4, def:"Imagen tomada desde arriba; empequeñece al sujeto y sugiere inferioridad, vulnerabilidad o soledad.", ej:"El ángulo picado subraya la vulnerabilidad de la víctima."},
+  {id:345, palabra:"ángulo contrapicado", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:1, def:"Imagen tomada desde abajo; engrandece al sujeto y sugiere poder, superioridad o grandiosidad.", ej:"El ángulo contrapicado dota al líder de una apariencia imponente."},
+  {id:346, palabra:"ángulo natural (medio)", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:2, def:"Imagen tomada a la altura de los ojos; transmite naturalidad y cercanía.", ej:"El ángulo natural favorece la identificación del receptor con el personaje."},
+  {id:347, palabra:"ángulo cenital", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:3, def:"Caso extremo del picado: imagen tomada completamente desde arriba.", ej:"El ángulo cenital convierte la escena en un mapa y distancia al espectador."},
+  {id:348, palabra:"ángulo nadir", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:4, def:"Caso extremo del contrapicado: imagen tomada completamente desde abajo.", ej:"El ángulo nadir exagera la altura del edificio hasta volverlo amenazante."},
+  {id:349, palabra:"simbolismo cromático", tipo:"loc.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:1, def:"Valor connotativo de los colores (rojo: alerta, pasión; azul: confianza; verde: naturaleza; negro: elegancia, drama).", ej:"El simbolismo cromático del rojo resalta la gravedad de las consecuencias."},
+  {id:350, palabra:"cinésica", tipo:"s.f.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:2, def:"Estudio de los gestos y movimientos corporales como elementos de comunicación, descriptivos o expresivos.", ej:"La cinésica del personaje —brazos cruzados, mirada baja— transmite rechazo."},
+  {id:351, palabra:"proxémica", tipo:"s.f.", cat:"ling", bloque:"Elementos visuales y diagramación", semana:3, def:"Estudio de la distancia o proximidad entre las personas (íntima, personal, social, pública) y de su valor comunicativo.", ej:"La proxémica íntima entre madre e hijo refuerza la estrategia emocional del anuncio."},
+  {id:352, palabra:"arte mayor", tipo:"loc.", cat:"lit", bloque:"Métrica", semana:4, def:"Verso de nueve o más sílabas métricas.", ej:"El soneto se compone de endecasílabos, versos de arte mayor."},
+  {id:353, palabra:"arte menor", tipo:"loc.", cat:"lit", bloque:"Métrica", semana:1, def:"Verso de ocho o menos sílabas métricas.", ej:"El romance emplea el octosílabo, verso de arte menor por excelencia de la tradición popular."},
+  {id:354, palabra:"rima asonante", tipo:"loc.", cat:"lit", bloque:"Métrica", semana:2, def:"Coincidencia solo de los sonidos vocálicos a partir de la última vocal tónica del verso.", ej:"Los versos pares del romance riman en asonante."},
+  {id:355, palabra:"rima consonante", tipo:"loc.", cat:"lit", bloque:"Métrica", semana:3, def:"Coincidencia de todos los sonidos, vocálicos y consonánticos, a partir de la última vocal tónica del verso.", ej:"En el primer núcleo, los pares riman en consonante en -or, aunque se trate de un romance."},
+  {id:356, palabra:"acotación", tipo:"s.f.", cat:"lit", bloque:"Teatro", semana:4, def:"Indicación del autor, al margen del diálogo, sobre escenografía, movimientos, gestos o tono de los personajes.", ej:"Las acotaciones de Lorca, casi poéticas, subrayan el ambiente opresivo de la casa."},
+  {id:357, palabra:"aparte", tipo:"s.m.", cat:"lit", bloque:"Teatro", semana:1, def:"Parlamento que un personaje dice para sí o para el público, convencionalmente no oído por los demás personajes.", ej:"El aparte revela al público las verdaderas intenciones del criado."},
+  {id:358, palabra:"monólogo", tipo:"s.m.", cat:"lit", bloque:"Teatro", semana:2, def:"Parlamento extenso de un personaje, dirigido a otros o al público, sin intervención ajena.", ej:"El monólogo final condensa la derrota moral del protagonista."},
+  {id:359, palabra:"soliloquio", tipo:"s.m.", cat:"lit", bloque:"Teatro", semana:3, def:"Monólogo en el que el personaje, solo en escena, reflexiona en voz alta sobre sí mismo.", ej:"El soliloquio expone el conflicto interior del personaje ante su decisión."},
+  {id:360, palabra:"mutis", tipo:"s.m.", cat:"lit", bloque:"Teatro", semana:4, def:"Salida de un personaje de la escena.", ej:"El mutis silencioso de la criada anticipa la tragedia."},
+  {id:361, palabra:"conflicto dramático", tipo:"loc.", cat:"lit", bloque:"Teatro", semana:1, def:"Enfrentamiento entre fuerzas opuestas (personajes, deseos, normas) que genera la acción dramática.", ej:"El conflicto dramático enfrenta el deseo de libertad de las hijas con la autoridad de la madre."},
+  {id:362, palabra:"catarsis", tipo:"s.f.", cat:"lit", bloque:"Teatro", semana:2, def:"Purificación emocional que experimenta el espectador ante el desenlace de la tragedia.", ej:"El desenlace provoca una catarsis al liberar la tensión acumulada durante la obra."},
+  {id:363, palabra:"caracterización (directa/indirecta)", tipo:"s.f.", cat:"lit", bloque:"Personajes", semana:3, def:"Procedimiento por el que se construye un personaje: directa, cuando el narrador lo describe; indirecta, cuando se deduce de sus actos, palabras o relaciones.", ej:"La caracterización indirecta de la madre se construye a través de sus órdenes y silencios."},
+  {id:364, palabra:"personaje redondo", tipo:"loc.", cat:"lit", bloque:"Personajes", semana:4, def:"Personaje complejo, con contradicciones y profundidad psicológica, capaz de sorprender al lector.", ej:"El protagonista es un personaje redondo: su ambigüedad moral impide juzgarlo con simpleza."},
+  {id:365, palabra:"personaje plano", tipo:"loc.", cat:"lit", bloque:"Personajes", semana:1, def:"Personaje construido en torno a un solo rasgo, sin evolución ni complejidad.", ej:"El vecino es un personaje plano que solo encarna la hipocresía social."},
+  {id:366, palabra:"personaje dinámico", tipo:"loc.", cat:"lit", bloque:"Personajes", semana:2, def:"Personaje que evoluciona o cambia a lo largo de la obra.", ej:"La protagonista es un personaje dinámico: pasa de la sumisión a la rebeldía."},
+  {id:367, palabra:"personaje estático", tipo:"loc.", cat:"lit", bloque:"Personajes", semana:3, def:"Personaje que no cambia a lo largo de la obra.", ej:"La abuela es un personaje estático que permanece fiel a sus creencias."},
+  {id:368, palabra:"protagonista", tipo:"s.m./f.", cat:"lit", bloque:"Personajes", semana:4, def:"Personaje principal, en torno al cual gira la acción.", ej:"El protagonista vertebra todos los relatos de la colección."},
+  {id:369, palabra:"antagonista", tipo:"s.m./f.", cat:"lit", bloque:"Personajes", semana:1, def:"Personaje o fuerza que se opone al protagonista y genera el conflicto.", ej:"La autoridad paterna funciona como antagonista del deseo del joven."},
+  {id:370, palabra:"personaje secundario", tipo:"loc.", cat:"lit", bloque:"Personajes", semana:2, def:"Personaje que acompaña o complementa la acción principal sin protagonizarla.", ej:"Los personajes secundarios aportan el contrapunto cómico a la trama."},
+  {id:371, palabra:"personaje tipo", tipo:"loc.", cat:"lit", bloque:"Personajes", semana:3, def:"Personaje que representa un grupo social, un oficio o un comportamiento reconocible (el pícaro, el avaro, el galán).", ej:"El pícaro es un personaje tipo de la narrativa del Siglo de Oro."},
+  {id:372, palabra:"arquetipo", tipo:"s.m.", cat:"lit", bloque:"Personajes", semana:4, def:"Modelo universal de personaje o situación que se repite en culturas y épocas distintas (el héroe, el sabio, la madre).", ej:"El anciano sabio responde al arquetipo del mentor."},
+  {id:373, palabra:"antihéroe", tipo:"s.m.", cat:"lit", bloque:"Personajes", semana:1, def:"Protagonista que carece de las virtudes tradicionales del héroe.", ej:"El pícaro es un antihéroe que sobrevive gracias al engaño."},
+  {id:374, palabra:"contrafigura", tipo:"s.f.", cat:"lit", bloque:"Personajes", semana:2, def:"Personaje que, por contraste, pone de relieve los rasgos de otro (en inglés, foil).", ej:"La hermana alegre funciona como contrafigura de la protagonista melancólica."},
+  {id:375, palabra:"personaje colectivo", tipo:"loc.", cat:"lit", bloque:"Personajes", semana:3, def:"Grupo que actúa como un único personaje dentro de la obra (el pueblo, el coro).", ej:"El pueblo de Fuenteovejuna es un personaje colectivo."},
+  {id:376, palabra:"fuentes fiables", tipo:"loc.", cat:"ling", bloque:"Argumentación y persuasión", semana:2, def:"Datos, estudios o testimonios procedentes de instituciones o autores reconocidos, que otorgan credibilidad a un argumento.", ej:"La cifra del Instituto Nacional de Estadística procede de una fuente fiable y refuerza la tesis de la autora."},
+];
+
+const CAT_LABELS = {
+  ling: "Análisis lingüístico y visual",
+  lit: "Análisis literario",
+  adj: "Adjetivos evaluativos",
+  conectores: "Conectores del discurso",
+  verbos: "Verbos de análisis"
+};
+
+const STORAGE_KEY = "tgc-vocab-progress-v1";
+
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveProgress(progress) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  } catch (e) { /* almacenamiento no disponible */ }
+}
+
+let progress = loadProgress();
+
+function isDominada(id) {
+  return !!(progress[id] && progress[id].dominada);
+}
+
+function toggleDominada(id) {
+  if (!progress[id]) progress[id] = {};
+  progress[id].dominada = !progress[id].dominada;
+  saveProgress(progress);
+  updateBadge();
+}
+
+function updateBadge() {
+  const total = VOCAB.length;
+  const done = VOCAB.filter(w => isDominada(w.id)).length;
+  document.getElementById("progressBadge").textContent = `${done} / ${total} dominadas`;
+}
+
+// ---------- Tabs ----------
+document.querySelectorAll("nav.tabs button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("nav.tabs button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const tab = btn.dataset.tab;
+    document.getElementById("tab-consulta").style.display = tab === "consulta" ? "" : "none";
+    document.getElementById("tab-practica").style.display = tab === "practica" ? "" : "none";
+  });
+});
+
+// ---------- Consulta ----------
+let activeCat = "todas";
+let searchQuery = "";
+
+document.getElementById("catChips").addEventListener("click", (e) => {
+  const chip = e.target.closest(".chip");
+  if (!chip) return;
+  activeCat = chip.dataset.cat;
+  document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+  chip.classList.add("active");
+  renderConsulta();
+});
+
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  searchQuery = e.target.value.trim().toLowerCase();
+  renderConsulta();
+});
+
+const BLOQUE_ORDER = {
+  ling: ["Metalenguaje del análisis", "Comunicación y funciones del lenguaje", "Tipología y finalidad textual", "Estructura y cohesión", "Nivel morfosintáctico", "Nivel léxico-semántico", "Argumentación y persuasión", "Elementos visuales y diagramación"],
+  lit: ["Figuras retóricas", "Narratología", "Personajes", "Teatro", "Descripción", "Métrica", "Estructura", "Otros"],
+  conectores: ["Introducir el tema", "Ordenar el discurso", "Añadir ideas", "Destacar y reforzar", "Reformular y aclarar", "Oposición y concesión", "Causa", "Consecuencia", "Opinión e hipótesis", "Retomar y concluir"],
+  verbos: ["Mostrar y revelar", "Intensificar o atenuar", "Relacionar y estructurar", "Argumentar y valorar"]
+};
+
+function wordCardHTML(w) {
+  return `
+    <div class="word-card" data-cat="${w.cat}">
+      <div class="tab-mark"></div>
+      <div class="word-card-head">
+        <h3>${w.palabra}</h3>
+        <span class="word-tipo">${w.tipo}</span>
+      </div>
+      <p class="word-def">${w.def}</p>
+      <p class="word-ej">${w.ej}</p>
+      <div class="word-meta">
+        <span class="word-cat-label">${CAT_LABELS[w.cat]} · semana ${w.semana}</span>
+        <button class="mark-btn ${isDominada(w.id) ? "dominada" : ""}" data-id="${w.id}">
+          ${isDominada(w.id) ? "✓ dominada" : "marcar"}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function groupedHTML(results, cat) {
+  const groups = {};
+  results.forEach(w => {
+    const b = w.bloque || "Otros";
+    if (!groups[b]) groups[b] = [];
+    groups[b].push(w);
+  });
+  return BLOQUE_ORDER[cat]
+    .filter(b => groups[b] && groups[b].length)
+    .map(b => `
+      <div class="block-heading">${b}</div>
+      ${groups[b].map(wordCardHTML).join("")}
+    `).join("");
+}
+
+function renderConsulta() {
+  const grid = document.getElementById("cardGrid");
+  let results = VOCAB.filter(w => {
+    if (activeCat === "todas") return true;
+    return w.cat === activeCat;
+  });
+  if (searchQuery) {
+    results = results.filter(w =>
+      w.palabra.toLowerCase().includes(searchQuery) ||
+      w.def.toLowerCase().includes(searchQuery)
+    );
+  }
+  document.getElementById("resultCount").textContent =
+    `${results.length} término${results.length === 1 ? "" : "s"}`;
+
+  if (results.length === 0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">No se ha encontrado ningún término con ese criterio.</div>`;
+    return;
+  }
+
+  grid.innerHTML = BLOQUE_ORDER[activeCat]
+    ? groupedHTML(results, activeCat)
+    : results.map(wordCardHTML).join("");
+
+  grid.querySelectorAll(".mark-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      toggleDominada(Number(btn.dataset.id));
+      renderConsulta();
+    });
+  });
+}
+
+// ---------- Práctica semanal ----------
+let activeWeek = 1;
+let activeMode = "fichas";
+let flashIndex = 0;
+let flashFlipped = false;
+let quizState = null;
+let repasoState = null;
+
+function weekWords(week) {
+  return VOCAB.filter(w => w.semana === week);
+}
+
+function renderWeekPicker() {
+  const picker = document.getElementById("weekPicker");
+  picker.innerHTML = [1, 2, 3, 4].map(w => {
+    const words = weekWords(w);
+    const done = words.filter(x => isDominada(x.id)).length;
+    return `
+      <button class="week-btn ${w === activeWeek ? "active" : ""}" data-week="${w}">
+        Semana ${w}
+        <span class="week-progress">${done}/${words.length} dominadas</span>
+      </button>
+    `;
+  }).join("");
+  picker.querySelectorAll(".week-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      activeWeek = Number(btn.dataset.week);
+      flashIndex = 0;
+      flashFlipped = false;
+      quizState = null;
+      repasoState = null;
+      renderWeekPicker();
+      renderPractica();
+    });
+  });
+}
+
+document.querySelectorAll(".mode-switch button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".mode-switch button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeMode = btn.dataset.mode;
+    flashIndex = 0;
+    flashFlipped = false;
+    quizState = null;
+    repasoState = null;
+    renderPractica();
+  });
+});
+
+function renderPractica() {
+  const body = document.getElementById("practicaBody");
+  const words = weekWords(activeWeek);
+  if (activeMode === "fichas") {
+    renderFichas(body, words);
+  } else if (activeMode === "quiz") {
+    renderQuiz(body, words);
+  } else {
+    const cumulative = VOCAB.filter(w => w.semana <= activeWeek);
+    renderRepaso(body, cumulative);
+  }
+}
+
+function renderFichas(body, words) {
+  if (flashIndex >= words.length) flashIndex = 0;
+  const w = words[flashIndex];
+  body.innerHTML = `
+    <div class="flash-wrap">
+      <p class="flash-progress">Ficha ${flashIndex + 1} de ${words.length} — Semana ${activeWeek}</p>
+      <div class="flashcard" id="flashcard">
+        ${flashFlipped ? `
+          <p class="back-def">${w.def}</p>
+          <p class="back-ej">${w.ej}</p>
+        ` : `
+          <span class="cat-tag" style="color:var(--${catColorVar(w.cat)})">${CAT_LABELS[w.cat]}</span>
+          <div class="front-word">${w.palabra}</div>
+          <div class="front-tipo">${w.tipo}</div>
+          <div class="flip-hint">Toca la tarjeta para ver la definición</div>
+        `}
+      </div>
+      <div class="flash-controls">
+        <button class="nav-btn" id="flashPrev">‹</button>
+        <div class="judge-btns">
+          <button class="btn-repasar" id="flashRepasar">A repasar</button>
+          <button class="btn-se" id="flashSe">La sé</button>
+        </div>
+        <button class="nav-btn" id="flashNext">›</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("flashcard").addEventListener("click", () => {
+    flashFlipped = !flashFlipped;
+    renderFichas(body, words);
+  });
+  document.getElementById("flashPrev").addEventListener("click", (e) => {
+    e.stopPropagation();
+    flashIndex = (flashIndex - 1 + words.length) % words.length;
+    flashFlipped = false;
+    renderFichas(body, words);
+  });
+  document.getElementById("flashNext").addEventListener("click", (e) => {
+    e.stopPropagation();
+    flashIndex = (flashIndex + 1) % words.length;
+    flashFlipped = false;
+    renderFichas(body, words);
+  });
+  document.getElementById("flashSe").addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (!progress[w.id]) progress[w.id] = {};
+    progress[w.id].dominada = true;
+    saveProgress(progress);
+    updateBadge();
+    flashIndex = (flashIndex + 1) % words.length;
+    flashFlipped = false;
+    renderFichas(body, words);
+    renderWeekPicker();
+  });
+  document.getElementById("flashRepasar").addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (!progress[w.id]) progress[w.id] = {};
+    progress[w.id].dominada = false;
+    saveProgress(progress);
+    updateBadge();
+    flashIndex = (flashIndex + 1) % words.length;
+    flashFlipped = false;
+    renderFichas(body, words);
+    renderWeekPicker();
+  });
+}
+
+function catColorVar(cat) {
+  return { ling: "gold", lit: "slate", adj: "teal", conectores: "wine", verbos: "sage" }[cat] || "ink";
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildQuiz(words) {
+  const questions = shuffle(words).slice(0, Math.min(10, words.length)).map(w => {
+    const pool = words.filter(x => x.id !== w.id);
+    const distractors = shuffle(pool).slice(0, 3);
+    const options = shuffle([w, ...distractors]);
+    return { word: w, options, answeredId: null };
+  });
+  return { questions, index: 0, score: 0 };
+}
+
+function renderQuiz(body, words) {
+  if (words.length < 4) {
+    body.innerHTML = `<p class="empty-state">Esta semana no tiene términos suficientes para la autoevaluación.</p>`;
+    return;
+  }
+  if (!quizState) quizState = buildQuiz(words);
+
+  if (quizState.index >= quizState.questions.length) {
+    const pct = Math.round((quizState.score / quizState.questions.length) * 100);
+    body.innerHTML = `
+      <div class="quiz-wrap">
+        <div class="quiz-card quiz-result">
+          <div class="score">${quizState.score}/${quizState.questions.length}</div>
+          <p class="score-label">${pct}% de aciertos — Semana ${activeWeek}</p>
+          <button id="quizRetry">Repetir autoevaluación</button>
+        </div>
+      </div>
+    `;
+    document.getElementById("quizRetry").addEventListener("click", () => {
+      quizState = buildQuiz(words);
+      renderQuiz(body, words);
+    });
+    return;
+  }
+
+  const q = quizState.questions[quizState.index];
+  const answered = q.answeredId !== null;
+
+  body.innerHTML = `
+    <div class="quiz-wrap">
+      <p class="quiz-progress">Pregunta ${quizState.index + 1} de ${quizState.questions.length} — Semana ${activeWeek} · Aciertos: ${quizState.score}</p>
+      <div class="quiz-card">
+        <div class="quiz-prompt">
+          <span class="cat-tag" style="color:var(--${catColorVar(q.word.cat)})">${CAT_LABELS[q.word.cat]}</span>
+          ${q.word.def}
+        </div>
+        <div class="quiz-options">
+          ${q.options.map(opt => {
+            let cls = "";
+            if (answered) {
+              if (opt.id === q.word.id) cls = "correct";
+              else if (opt.id === q.answeredId) cls = "incorrect";
+            }
+            return `<button class="quiz-option ${cls}" data-id="${opt.id}" ${answered ? "disabled" : ""}>${opt.palabra}</button>`;
+          }).join("")}
+        </div>
+        <button class="quiz-next" id="quizNext" style="${answered ? "display:inline-block;" : ""}">Siguiente</button>
+      </div>
+    </div>
+  `;
+
+  if (!answered) {
+    body.querySelectorAll(".quiz-option").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const chosenId = Number(btn.dataset.id);
+        q.answeredId = chosenId;
+        if (chosenId === q.word.id) quizState.score++;
+        renderQuiz(body, words);
+      });
+    });
+  } else {
+    document.getElementById("quizNext").addEventListener("click", () => {
+      quizState.index++;
+      renderQuiz(body, words);
+    });
+  }
+}
+
+function buildRepasoQuiz(words) {
+  // Pondera hacia los términos aún no dominados (repaso dirigido por huecos),
+  // sin dejar de incluir, con menor frecuencia, los ya dominados (retención a largo plazo).
+  let pool = [];
+  words.forEach(w => {
+    const weight = isDominada(w.id) ? 1 : 2;
+    for (let i = 0; i < weight; i++) pool.push(w);
+  });
+  pool = shuffle(pool);
+
+  const seen = new Set();
+  const selected = [];
+  for (const w of pool) {
+    if (!seen.has(w.id)) {
+      seen.add(w.id);
+      selected.push(w);
+    }
+    if (selected.length >= 12) break;
+  }
+
+  const questions = selected.map(w => {
+    const distractorPool = words.filter(x => x.id !== w.id);
+    const distractors = shuffle(distractorPool).slice(0, 3);
+    const options = shuffle([w, ...distractors]);
+    return { word: w, options, answeredId: null };
+  });
+  return { questions, index: 0, score: 0 };
+}
+
+function renderRepaso(body, words) {
+  if (words.length < 4) {
+    body.innerHTML = `<p class="empty-state">Necesitas haber trabajado al menos una semana con 4 términos para generar un repaso acumulado.</p>`;
+    return;
+  }
+  if (!repasoState) repasoState = buildRepasoQuiz(words);
+
+  const rangeLabel = activeWeek === 1 ? "semana 1" : `semanas 1 a ${activeWeek}`;
+
+  if (repasoState.index >= repasoState.questions.length) {
+    const pct = Math.round((repasoState.score / repasoState.questions.length) * 100);
+    body.innerHTML = `
+      <div class="quiz-wrap">
+        <div class="quiz-card quiz-result">
+          <div class="score">${repasoState.score}/${repasoState.questions.length}</div>
+          <p class="score-label">${pct}% de aciertos — repaso acumulado (${rangeLabel})</p>
+          <button id="repasoRetry">Generar otro repaso</button>
+        </div>
+      </div>
+    `;
+    document.getElementById("repasoRetry").addEventListener("click", () => {
+      repasoState = buildRepasoQuiz(words);
+      renderRepaso(body, words);
+    });
+    return;
+  }
+
+  const q = repasoState.questions[repasoState.index];
+  const answered = q.answeredId !== null;
+
+  body.innerHTML = `
+    <div class="quiz-wrap">
+      <p class="quiz-progress">Pregunta ${repasoState.index + 1} de ${repasoState.questions.length} — Repaso acumulado (${rangeLabel}) · Aciertos: ${repasoState.score}</p>
+      <div class="quiz-card">
+        <div class="quiz-prompt">
+          <span class="cat-tag" style="color:var(--${catColorVar(q.word.cat)})">${CAT_LABELS[q.word.cat]} · semana ${q.word.semana}</span>
+          ${q.word.def}
+        </div>
+        <div class="quiz-options">
+          ${q.options.map(opt => {
+            let cls = "";
+            if (answered) {
+              if (opt.id === q.word.id) cls = "correct";
+              else if (opt.id === q.answeredId) cls = "incorrect";
+            }
+            return `<button class="quiz-option ${cls}" data-id="${opt.id}" ${answered ? "disabled" : ""}>${opt.palabra}</button>`;
+          }).join("")}
+        </div>
+        <button class="quiz-next" id="repasoNext" style="${answered ? "display:inline-block;" : ""}">Siguiente</button>
+      </div>
+    </div>
+  `;
+
+  if (!answered) {
+    body.querySelectorAll(".quiz-option").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const chosenId = Number(btn.dataset.id);
+        q.answeredId = chosenId;
+        if (chosenId === q.word.id) repasoState.score++;
+        renderRepaso(body, words);
+      });
+    });
+  } else {
+    document.getElementById("repasoNext").addEventListener("click", () => {
+      repasoState.index++;
+      renderRepaso(body, words);
+    });
+  }
+}
+
+// ---------- Init ----------
+updateBadge();
+renderConsulta();
+renderWeekPicker();
+renderPractica();
+</script>
+</body>
+</html>
