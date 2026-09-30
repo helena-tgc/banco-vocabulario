@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Banco de Vocabulario Académico — Español A SL</title>
+<title>Banco de Vocabulario Académico — Español A</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -210,6 +210,8 @@
   .chip[data-cat="lit"].active { background: var(--slate-soft); color: var(--slate); border-color: var(--slate); }
   .chip[data-cat="adj"].active { background: var(--teal-soft); color: var(--teal); border-color: var(--teal); }
   .chip[data-cat="conectores"].active { background: var(--wine-soft); color: var(--wine); border-color: var(--wine); }
+  .chip[data-cat="repasar"] { border-style: dashed; }
+  .chip[data-cat="repasar"].active { background: var(--wine-soft); color: var(--wine); border-color: var(--wine); border-style: solid; }
   .chip[data-cat="verbos"].active { background: var(--sage-soft); color: var(--sage); border-color: var(--sage); }
   .chip[data-cat="todas"].active { background: var(--ink); color: var(--card); border-color: var(--ink); }
 
@@ -376,6 +378,8 @@
   }
 
   .mode-switch {
+    flex-wrap: wrap;
+    max-width: 100%;
     display: flex;
     gap: 0;
     margin-bottom: 22px;
@@ -567,6 +571,13 @@
   .quiz-option.incorrect { border-color: var(--wine); background: var(--wine-soft); color: var(--wine); }
   .quiz-option[disabled] { cursor: default; }
 
+  .quiz-note {
+    margin: 14px 0 0;
+    font-size: 0.85rem;
+    color: var(--wine);
+    font-style: italic;
+  }
+
   .quiz-next {
     margin-top: 18px;
     font-family: "Work Sans", sans-serif;
@@ -633,7 +644,7 @@
   <header class="masthead">
     <div class="masthead-top">
       <h1>Banco de Vocabulario Académico</h1>
-      <span class="badge-count" id="progressBadge">0 / 112 dominadas</span>
+      <span class="badge-count" id="progressBadge"></span>
     </div>
     <p class="subtitle">Español A — vocabulario de análisis lingüístico, visual y literario, conectores del discurso y adjetivos para evaluar un texto, válido para cualquier prueba. Organizado en 4 semanas de trabajo.</p>
   </header>
@@ -654,6 +665,7 @@
       <button class="chip" data-cat="adj">Adjetivos evaluativos</button>
       <button class="chip" data-cat="conectores">Conectores del discurso</button>
       <button class="chip" data-cat="verbos">Verbos</button>
+      <button class="chip" data-cat="repasar">★ Mis palabras para repasar</button>
     </div>
     <p class="result-count" id="resultCount"></p>
     <div class="card-grid" id="cardGrid"></div>
@@ -665,6 +677,7 @@
       <button class="active" data-mode="fichas">Fichas</button>
       <button data-mode="quiz">Autoevaluación</button>
       <button data-mode="repaso">Repaso acumulado</button>
+      <button data-mode="repasar">Mis palabras para repasar</button>
     </div>
     <div id="practicaBody"></div>
   </section>
@@ -1034,9 +1047,22 @@ function isDominada(id) {
   return !!(progress[id] && progress[id].dominada);
 }
 
+function isARepasar(id) {
+  return !!(progress[id] && progress[id].repasar);
+}
+
+function markARepasar(id) {
+  if (!progress[id]) progress[id] = {};
+  progress[id].dominada = false;
+  progress[id].repasar = true;
+  saveProgress(progress);
+  updateBadge();
+}
+
 function toggleDominada(id) {
   if (!progress[id]) progress[id] = {};
   progress[id].dominada = !progress[id].dominada;
+  if (progress[id].dominada) progress[id].repasar = false;
   saveProgress(progress);
   updateBadge();
 }
@@ -1044,7 +1070,9 @@ function toggleDominada(id) {
 function updateBadge() {
   const total = VOCAB.length;
   const done = VOCAB.filter(w => isDominada(w.id)).length;
-  document.getElementById("progressBadge").textContent = `${done} / ${total} dominadas`;
+  const pend = VOCAB.filter(w => isARepasar(w.id)).length;
+  document.getElementById("progressBadge").textContent =
+    `${done} / ${total} dominadas · ${pend} a repasar`;
 }
 
 // ---------- Tabs ----------
@@ -1122,6 +1150,7 @@ function renderConsulta() {
   const grid = document.getElementById("cardGrid");
   let results = VOCAB.filter(w => {
     if (activeCat === "todas") return true;
+    if (activeCat === "repasar") return isARepasar(w.id);
     return w.cat === activeCat;
   });
   if (searchQuery) {
@@ -1134,7 +1163,9 @@ function renderConsulta() {
     `${results.length} término${results.length === 1 ? "" : "s"}`;
 
   if (results.length === 0) {
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">No se ha encontrado ningún término con ese criterio.</div>`;
+    grid.innerHTML = activeCat === "repasar"
+      ? `<div class="empty-state" style="grid-column:1/-1;">No tienes palabras pendientes. Se añaden aquí al pulsar «A repasar» en las fichas o al fallar una pregunta.</div>`
+      : `<div class="empty-state" style="grid-column:1/-1;">No se ha encontrado ningún término con ese criterio.</div>`;
     return;
   }
 
@@ -1202,11 +1233,19 @@ document.querySelectorAll(".mode-switch button").forEach(btn => {
 
 function renderPractica() {
   const body = document.getElementById("practicaBody");
+  document.getElementById("weekPicker").style.display = activeMode === "repasar" ? "none" : "";
   const words = weekWords(activeWeek);
   if (activeMode === "fichas") {
     renderFichas(body, words);
   } else if (activeMode === "quiz") {
     renderQuiz(body, words);
+  } else if (activeMode === "repasar") {
+    const pend = VOCAB.filter(w => isARepasar(w.id));
+    if (pend.length === 0) {
+      body.innerHTML = `<p class="empty-state">No tienes palabras pendientes. Se añaden aquí al pulsar «A repasar» en las fichas o al fallar una pregunta de la autoevaluación o del repaso acumulado.</p>`;
+      return;
+    }
+    renderFichas(body, pend);
   } else {
     const cumulative = VOCAB.filter(w => w.semana <= activeWeek);
     renderRepaso(body, cumulative);
@@ -1218,7 +1257,7 @@ function renderFichas(body, words) {
   const w = words[flashIndex];
   body.innerHTML = `
     <div class="flash-wrap">
-      <p class="flash-progress">Ficha ${flashIndex + 1} de ${words.length} — Semana ${activeWeek}</p>
+      <p class="flash-progress">Ficha ${flashIndex + 1} de ${words.length} — ${activeMode === "repasar" ? "mis palabras para repasar (todas las semanas)" : "Semana " + activeWeek}</p>
       <div class="flashcard" id="flashcard">
         ${flashFlipped ? `
           <p class="back-def">${w.def}</p>
@@ -1261,17 +1300,23 @@ function renderFichas(body, words) {
     e.stopPropagation();
     if (!progress[w.id]) progress[w.id] = {};
     progress[w.id].dominada = true;
+    progress[w.id].repasar = false;
     saveProgress(progress);
     updateBadge();
-    flashIndex = (flashIndex + 1) % words.length;
     flashFlipped = false;
-    renderFichas(body, words);
+    if (activeMode === "repasar") {
+      renderPractica();
+    } else {
+      flashIndex = (flashIndex + 1) % words.length;
+      renderFichas(body, words);
+    }
     renderWeekPicker();
   });
   document.getElementById("flashRepasar").addEventListener("click", (e) => {
     e.stopPropagation();
     if (!progress[w.id]) progress[w.id] = {};
     progress[w.id].dominada = false;
+    progress[w.id].repasar = true;
     saveProgress(progress);
     updateBadge();
     flashIndex = (flashIndex + 1) % words.length;
@@ -1350,6 +1395,7 @@ function renderQuiz(body, words) {
             return `<button class="quiz-option ${cls}" data-id="${opt.id}" ${answered ? "disabled" : ""}>${opt.palabra}</button>`;
           }).join("")}
         </div>
+        ${answered && q.answeredId !== q.word.id ? `<p class="quiz-note">«${q.word.palabra}» se ha añadido a tus palabras para repasar.</p>` : ""}
         <button class="quiz-next" id="quizNext" style="${answered ? "display:inline-block;" : ""}">Siguiente</button>
       </div>
     </div>
@@ -1361,6 +1407,7 @@ function renderQuiz(body, words) {
         const chosenId = Number(btn.dataset.id);
         q.answeredId = chosenId;
         if (chosenId === q.word.id) quizState.score++;
+        else markARepasar(q.word.id);
         renderQuiz(body, words);
       });
     });
@@ -1373,26 +1420,28 @@ function renderQuiz(body, words) {
 }
 
 function buildRepasoQuiz(words) {
-  // Pondera hacia los términos aún no dominados (repaso dirigido por huecos),
-  // sin dejar de incluir, con menor frecuencia, los ya dominados (retención a largo plazo).
+  // Prioridad: 1) todas las marcadas "a repasar"; 2) el resto de no dominadas;
+  // 3) con menor frecuencia, las dominadas (retención a largo plazo).
+  const MAX = 12;
+  const selected = shuffle(words.filter(w => isARepasar(w.id))).slice(0, MAX);
+  const seen = new Set(selected.map(w => w.id));
   let pool = [];
   words.forEach(w => {
-    const weight = isDominada(w.id) ? 1 : 2;
+    if (seen.has(w.id)) return;
+    const weight = isDominada(w.id) ? 1 : 3;
     for (let i = 0; i < weight; i++) pool.push(w);
   });
   pool = shuffle(pool);
 
-  const seen = new Set();
-  const selected = [];
   for (const w of pool) {
+    if (selected.length >= MAX) break;
     if (!seen.has(w.id)) {
       seen.add(w.id);
       selected.push(w);
     }
-    if (selected.length >= 12) break;
   }
 
-  const questions = selected.map(w => {
+  const questions = shuffle(selected).map(w => {
     const distractorPool = words.filter(x => x.id !== w.id);
     const distractors = shuffle(distractorPool).slice(0, 3);
     const options = shuffle([w, ...distractors]);
@@ -1449,6 +1498,7 @@ function renderRepaso(body, words) {
             return `<button class="quiz-option ${cls}" data-id="${opt.id}" ${answered ? "disabled" : ""}>${opt.palabra}</button>`;
           }).join("")}
         </div>
+        ${answered && q.answeredId !== q.word.id ? `<p class="quiz-note">«${q.word.palabra}» se ha añadido a tus palabras para repasar.</p>` : ""}
         <button class="quiz-next" id="repasoNext" style="${answered ? "display:inline-block;" : ""}">Siguiente</button>
       </div>
     </div>
@@ -1460,6 +1510,7 @@ function renderRepaso(body, words) {
         const chosenId = Number(btn.dataset.id);
         q.answeredId = chosenId;
         if (chosenId === q.word.id) repasoState.score++;
+        else markARepasar(q.word.id);
         renderRepaso(body, words);
       });
     });
